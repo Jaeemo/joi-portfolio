@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 피그마에서 가져온 애니메이션 설정 */
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 3s linear infinite;
+  }
+  .text-stroke {
+    -webkit-text-stroke: 1px black; /* 글자 테두리 효과 */
+  }
+  .text-stroke-white {
+    -webkit-text-stroke: 1px white;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(1turn); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease forwards;
+}
