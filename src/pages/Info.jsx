@@ -15,15 +15,19 @@ const Info = () => {
 
           {/* LEFT COLUMN: EDUCATION */}
           <div className="w-full md:w-1/2">
-            <h2 className="text-3xl font-black mb-8 border-b-4 border-black pb-2 uppercase tracking-tight">EDUCATION</h2>
-
-            <div className="space-y-8 font-bold text-lg md:text-xl font-sans">
-
+            {/* CAREER Section */}
+            <h2 className="text-3xl font-black mb-8 border-b-4 border-black pb-2 uppercase tracking-tight">CAREER</h2>
+            <div className="space-y-8 font-bold text-lg md:text-xl font-sans mb-16">
               <div>
                 <p className="mb-1">2025 (KR)</p>
                 <p className="text-xl md:text-2xl font-black uppercase">DAZED KOREA</p>
                 <p className="text-gray-600">- Graphic Deisgner/Digital editor</p>
               </div>
+            </div>
+
+            <h2 className="text-3xl font-black mb-8 border-b-4 border-black pb-2 uppercase tracking-tight">EDUCATION</h2>
+
+            <div className="space-y-8 font-bold text-lg md:text-xl font-sans">
 
               {/* Item 1 */}
               <div>

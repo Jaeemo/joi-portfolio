@@ -3,21 +3,21 @@ import Main from './Main';
 import { rgbProjects } from '../data/projects';
 
 const layoutConfig = {
-    '1.png': { x: 0, y: 1746, w: 1920, h: 1080 },
-    '2.png': { x: 0, y: 2826, w: 1920, h: 1080 },
-    '3.png': { x: 0, y: 3906, w: 1920, h: 1080 },
-    '4.png': { x: -709, y: 6042, w: 3338, h: 2808 },
-    '5.png': { x: 0, y: 8786, w: 1209, h: 1600 },
-    '6.png': { x: 382, y: 9659, w: 1538, h: 2050 },
-    '7.png': { x: 59, y: 11709, w: 1802, h: 2988 },
-    '8.png': { x: 802, y: 14997, w: 1139, h: 1485 },
-    '9.png': { x: 59, y: 15747, w: 1202, h: 1669 },
-    '10.png': { x: 0, y: 19071, w: 1920, h: 1080 },
-    '11.png': { x: -104, y: 20056, w: 2128, h: 1270 },
-    '12.png': { x: 50, y: 21261, w: 1813, h: 1867 },
-    '13.png': { x: -45, y: 23128, w: 2010, h: 1220 },
-    '14-1.png': { x: -23, y: 24348, w: 1002, h: 1336 },
-    '14-2.png': { x: 940, y: 24348, w: 1002, h: 1336 },
+    '1.png': { x: 0, y: 1146, w: 1920, h: 1080 },
+    '2.png': { x: 0, y: 2226, w: 1920, h: 1080 },
+    '3.png': { x: 0, y: 3306, w: 1920, h: 1080 },
+    '4.png': { x: -709, y: 5442, w: 3338, h: 2808 },
+    '5.png': { x: 0, y: 8186, w: 1209, h: 1600 },
+    '6.png': { x: 382, y: 9059, w: 1538, h: 2050 },
+    '7.png': { x: 59, y: 11109, w: 1802, h: 2988 },
+    '8.png': { x: 802, y: 14397, w: 1139, h: 1485 },
+    '9.png': { x: 59, y: 15147, w: 1202, h: 1669 },
+    '10.png': { x: 0, y: 18471, w: 1920, h: 1080 },
+    '11.png': { x: -104, y: 19456, w: 2128, h: 1270 },
+    '12.png': { x: 50, y: 20661, w: 1813, h: 1867 },
+    '13.png': { x: -45, y: 22528, w: 2010, h: 1220 },
+    '14-1.png': { x: -23, y: 23748, w: 1002, h: 1336 },
+    '14-2.png': { x: 940, y: 23748, w: 1002, h: 1336 },
 };
 
 const RGB = () => {
@@ -81,23 +81,23 @@ const RGB = () => {
                 <div className="absolute left-[100px] top-[200px] w-[1720px] z-30">
                     <div className="mb-12">
                         <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
-                            <h2 className="text-6xl font-anton-sc uppercase tracking-tight leading-none">
+                            <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
                                 {toothFairy.title}
                             </h2>
-                            <span className="text-5xl font-anton-sc tracking-tight shrink-0 ml-8">
+                            <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
                                 {toothFairy.year}
                             </span>
                         </div>
-                        <div className="grid grid-cols-2 gap-16">
+                        <div className="flex justify-between items-start">
                             {toothFairy.descriptionKo && (
                                 <div
-                                    className="text-xl leading-relaxed text-gray-900 whitespace-pre-wrap"
+                                    className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
                                     dangerouslySetInnerHTML={{ __html: toothFairy.descriptionKo }}
                                 />
                             )}
                             {toothFairy.descriptionEn && (
                                 <div
-                                    className="text-lg leading-relaxed text-gray-800 uppercase font-bold tracking-wide whitespace-pre-wrap"
+                                    className="w-[830px] text-xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
                                     dangerouslySetInnerHTML={{ __html: toothFairy.descriptionEn }}
                                 />
                             )}
@@ -107,26 +107,26 @@ const RGB = () => {
 
                 {/* 2. ANGEL HEART (Between 3.png and 4.png) */}
                 {/* 3.png ends at 4986. 4.png starts at 6042. Placing at 5500. */}
-                <div className="absolute left-[100px] top-[5400px] w-[1720px] z-30">
+                <div className="absolute left-[100px] top-[4800px] w-[1720px] z-30">
                     <div className="mb-12">
                         <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
-                            <h2 className="text-6xl font-anton-sc uppercase tracking-tight leading-none">
+                            <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
                                 {angelHeart.title}
                             </h2>
-                            <span className="text-5xl font-anton-sc tracking-tight shrink-0 ml-8">
+                            <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
                                 {angelHeart.year}
                             </span>
                         </div>
-                        <div className="grid grid-cols-2 gap-16">
+                        <div className="flex justify-between items-start">
                             {angelHeart.descriptionKo && (
                                 <div
-                                    className="text-2xl leading-relaxed text-gray-900 whitespace-pre-wrap"
+                                    className="w-[830px] text-3xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
                                     dangerouslySetInnerHTML={{ __html: angelHeart.descriptionKo }}
                                 />
                             )}
                             {angelHeart.descriptionEn && (
                                 <div
-                                    className="text-2xl leading-relaxed text-gray-800 uppercase font-bold tracking-wide whitespace-pre-wrap"
+                                    className="w-[830px] text-3xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
                                     dangerouslySetInnerHTML={{ __html: angelHeart.descriptionEn }}
                                 />
                             )}
@@ -137,21 +137,21 @@ const RGB = () => {
                 {/* 3. Text Section: EVERY ANGEL IS TERRIFYING (Between 9 and 10) */}
                 {/* 9.png ends at ~16900. 10.png starts at 19071. Placing at 17800. */}
                 {virtualIdolText && (
-                    <div className="absolute left-[100px] top-[17800px] w-[1720px] z-30">
+                    <div className="absolute left-[100px] top-[17200px] w-[1720px] z-30">
                         <div className="mb-12">
                             <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
                                 <div className="max-w-2xl">
-                                    <h2 className="text-6xl font-anton-sc uppercase tracking-tight leading-none">
+                                    <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
                                         {virtualIdolText.title}
                                     </h2>
                                     {virtualIdolText.subtitle && (
-                                        <h3 className="text-4xl font-anton-sc uppercase tracking-tight leading-tight mt-2">
+                                        <h3 className="text-5xl font-anton-sc uppercase tracking-tighter leading-tight mt-2">
                                             {virtualIdolText.subtitle}
                                         </h3>
                                     )}
                                 </div>
                                 <div className="flex flex-col items-end shrink-0 ml-8">
-                                    <span className="text-5xl font-anton-sc tracking-tight">
+                                    <span className="text-6xl font-anton-sc tracking-tighter">
                                         {virtualIdolText.year}
                                     </span>
                                     {virtualIdolText.note && (
@@ -161,16 +161,16 @@ const RGB = () => {
                                     )}
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-16">
+                            <div className="flex justify-between items-start">
                                 {virtualIdolText.descKo && (
                                     <div
-                                        className="text-xl leading-relaxed text-gray-900 whitespace-pre-wrap"
+                                        className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
                                         dangerouslySetInnerHTML={{ __html: virtualIdolText.descKo }}
                                     />
                                 )}
                                 {virtualIdolText.descEn && (
                                     <div
-                                        className="text-lg leading-relaxed text-gray-800 uppercase font-bold tracking-wide whitespace-pre-wrap"
+                                        className="w-[830px] text-xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
                                         dangerouslySetInnerHTML={{ __html: virtualIdolText.descEn }}
                                     />
                                 )}

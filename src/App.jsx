@@ -4,6 +4,7 @@ import Main from './pages/Main';
 import Info from './pages/Info';
 import RGB from './pages/RGB';
 import CMYK from './pages/CMYK';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/cmyk" element={<CMYK />} />
         </Routes>
       </div>
+      <ScrollToTop />
     </BrowserRouter>
   );
 }

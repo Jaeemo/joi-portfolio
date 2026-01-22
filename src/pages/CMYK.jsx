@@ -5,28 +5,28 @@ import { cmykProjects } from '../data/projects';
 const CMYK = () => {
 
     const layoutConfig = {
-        '1.png': { x: 0, y: 1997, w: 1920, h: 2560 },
-        '2.png': { x: 0, y: 4563, w: 1933, h: 1289 },
-        '3-1.png': { x: 0, y: 5613, w: 1080, h: 1440 },
-        '3-2.png': { x: 985, y: 5985, w: 1080, h: 1440 },
-        '4.png': { x: 790, y: 6903, w: 1080, h: 1440 },
-        '5.png': { x: 50, y: 7426, w: 1080, h: 1440 },
-        '6.png': { x: 250, y: 8465, w: 1080, h: 1440 },
-        '7.png': { x: -263, y: 9905, w: 2447, h: 2063 },
-        '8.png': { x: 0, y: 11968, w: 935, h: 623 },
-        '9.png': { x: 868, y: 12316, w: 1052, h: 701 },
-        '10.png': { x: 811, y: 13061, w: 999, h: 1499 },
-        '11.png': { x: -2, y: 16145, w: 1925, h: 1203 },
-        '12-1.png': { x: 0, y: 17434, w: 981, h: 613 },
-        '12-2.png': { x: 985, y: 17434, w: 940, h: 588 },
-        '13-1.png': { x: 0, y: 18047, w: 624, h: 622 },
-        '13-2.png': { x: 676, y: 18047, w: 623, h: 623 },
-        '13-3.png': { x: 1299, y: 18051, w: 621, h: 619 },
-        '14.png': { x: 173, y: 18670, w: 252, h: 270 },
-        '15.png': { x: 425, y: 18756, w: 1070, h: 723 },
-        'word1.png': { x: 1394, y: 11837, w: 470, h: 665 },
-        'word2.png': { x: 0, y: 12677, w: 480, h: 679 },
-        'word3.png': { x: 505, y: 12846, w: 480, h: 678 },
+        '1.png': { x: 0, y: 1197, w: 1920, h: 2560 },
+        '2.png': { x: 0, y: 3763, w: 1933, h: 1289 },
+        '3-1.png': { x: 0, y: 4813, w: 1080, h: 1440 },
+        '3-2.png': { x: 985, y: 5185, w: 1080, h: 1440 },
+        '4.png': { x: 790, y: 6103, w: 1080, h: 1440 },
+        '5.png': { x: 50, y: 6626, w: 1080, h: 1440 },
+        '6.png': { x: 250, y: 7665, w: 1080, h: 1440 },
+        '7.png': { x: -263, y: 9105, w: 2447, h: 2063 },
+        '8.png': { x: 0, y: 11168, w: 935, h: 623 },
+        '9.png': { x: 868, y: 11516, w: 1052, h: 701 },
+        '10.png': { x: 811, y: 12261, w: 999, h: 1499 },
+        '11.png': { x: -2, y: 15345, w: 1925, h: 1203 },
+        '12-1.png': { x: 0, y: 16634, w: 981, h: 613 },
+        '12-2.png': { x: 985, y: 16634, w: 940, h: 588 },
+        '13-1.png': { x: 0, y: 17247, w: 624, h: 622 },
+        '13-2.png': { x: 676, y: 17247, w: 623, h: 623 },
+        '13-3.png': { x: 1299, y: 17251, w: 621, h: 619 },
+        '14.png': { x: 173, y: 17870, w: 252, h: 270 },
+        '15.png': { x: 425, y: 17956, w: 1070, h: 723 },
+        'word1.png': { x: 1394, y: 11037, w: 470, h: 665 },
+        'word2.png': { x: 0, y: 11877, w: 480, h: 679 },
+        'word3.png': { x: 505, y: 12046, w: 480, h: 678 },
     };
 
 
@@ -90,23 +90,23 @@ const CMYK = () => {
                 <div className="absolute left-[100px] top-[200px] w-[1720px]">
                     <div className="mb-12">
                         <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
-                            <h2 className="text-6xl font-anton-sc uppercase tracking-tight leading-none">
+                            <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
                                 {wetToDryProject.title}
                             </h2>
-                            <span className="text-5xl font-anton-sc tracking-tight shrink-0 ml-8">
+                            <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
                                 {wetToDryProject.year}
                             </span>
                         </div>
-                        <div className="grid grid-cols-2 gap-16">
+                        <div className="flex justify-between items-start">
                             {wetToDryProject.descKo && (
                                 <div
-                                    className="text-xl leading-relaxed text-gray-900 whitespace-pre-wrap"
+                                    className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
                                     dangerouslySetInnerHTML={{ __html: wetToDryProject.descKo }}
                                 />
                             )}
                             {wetToDryProject.descEn && (
                                 <div
-                                    className="text-lg leading-relaxed text-gray-800 uppercase font-bold tracking-wide whitespace-pre-wrap"
+                                    className="w-[830px] text-xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
                                     dangerouslySetInnerHTML={{ __html: wetToDryProject.descEn }}
                                 />
                             )}
@@ -116,26 +116,26 @@ const CMYK = () => {
 
                 {/* 2. Text Section: PAIN TONE (Between 10 and 11) */}
                 {painToneData && (
-                    <div className="absolute left-[100px] top-[14800px] w-[1720px]">
+                    <div className="absolute left-[100px] top-[14000px] w-[1720px]">
                         <div className="mb-12">
                             <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
-                                <h2 className="text-6xl font-anton-sc uppercase tracking-tight leading-none">
+                                <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
                                     {painToneData.title}
                                 </h2>
-                                <span className="text-5xl font-anton-sc tracking-tight shrink-0 ml-8">
+                                <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
                                     {painToneData.year}
                                 </span>
                             </div>
-                            <div className="grid grid-cols-2 gap-16">
+                            <div className="flex justify-between items-start">
                                 {painToneData.descKo && (
                                     <div
-                                        className="text-xl leading-relaxed text-gray-900 whitespace-pre-wrap"
+                                        className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
                                         dangerouslySetInnerHTML={{ __html: painToneData.descKo }}
                                     />
                                 )}
                                 {painToneData.descEn && (
                                     <div
-                                        className="text-lg leading-relaxed text-gray-800 uppercase font-bold tracking-wide whitespace-pre-wrap"
+                                        className="w-[830px] text-xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
                                         dangerouslySetInnerHTML={{ __html: painToneData.descEn }}
                                     />
                                 )}
