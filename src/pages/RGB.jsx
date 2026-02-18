@@ -27,7 +27,7 @@ const RGB = () => {
 
     // Calculate max height based on the last image
     const lastImage = layoutConfig['14-2.png'];
-    const contentHeight = lastImage ? lastImage.y + lastImage.h + 200 : 30000;
+    const contentHeight = lastImage ? lastImage.y + lastImage.h + 50 : 30000;
 
     useEffect(() => {
         const handleResize = () => {
@@ -67,162 +67,164 @@ const RGB = () => {
         <div className="relative w-full min-h-screen bg-white selection:bg-pink-500 selection:text-white overflow-hidden">
             <Main activePage="rgb" />
 
-            {/* Scalable Container */}
-            <div
-                className="relative origin-top-left transition-transform duration-100 ease-out"
-                style={{
-                    width: '1920px',
-                    height: `${contentHeight}px`,
-                    transform: `scale(${scale})`,
-                    marginBottom: '100px'
-                }}
-            >
-                {/* 1. TOOTH FAIRY (Top) */}
-                <div className="absolute left-[100px] top-[200px] w-[1720px] z-30">
-                    <div className="mb-12">
-                        <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
-                            <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
-                                {toothFairy.title}
-                            </h2>
-                            <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
-                                {toothFairy.year}
-                            </span>
-                        </div>
-                        <div className="flex justify-between items-start">
-                            {toothFairy.descriptionKo && (
-                                <div
-                                    className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
-                                    dangerouslySetInnerHTML={{ __html: toothFairy.descriptionKo }}
-                                />
-                            )}
-                            {toothFairy.descriptionEn && (
-                                <div
-                                    className="w-[830px] text-xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
-                                    dangerouslySetInnerHTML={{ __html: toothFairy.descriptionEn }}
-                                />
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                {/* 2. ANGEL HEART (Between 3.png and 4.png) */}
-                {/* 3.png ends at 4986. 4.png starts at 6042. Placing at 5500. */}
-                <div className="absolute left-[100px] top-[4800px] w-[1720px] z-30">
-                    <div className="mb-12">
-                        <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
-                            <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
-                                {angelHeart.title}
-                            </h2>
-                            <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
-                                {angelHeart.year}
-                            </span>
-                        </div>
-                        <div className="flex justify-between items-start">
-                            {angelHeart.descriptionKo && (
-                                <div
-                                    className="w-[830px] text-3xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
-                                    dangerouslySetInnerHTML={{ __html: angelHeart.descriptionKo }}
-                                />
-                            )}
-                            {angelHeart.descriptionEn && (
-                                <div
-                                    className="w-[830px] text-3xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
-                                    dangerouslySetInnerHTML={{ __html: angelHeart.descriptionEn }}
-                                />
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                {/* 3. Text Section: EVERY ANGEL IS TERRIFYING (Between 9 and 10) */}
-                {/* 9.png ends at ~16900. 10.png starts at 19071. Placing at 17800. */}
-                {virtualIdolText && (
-                    <div className="absolute left-[100px] top-[17200px] w-[1720px] z-30">
+            {/* Wrapper to hold height */}
+            <div style={{ height: `${contentHeight * scale}px`, position: 'relative', width: '100%', overflow: 'hidden' }}>
+                {/* Scalable Container */}
+                <div
+                    className="absolute origin-top-left transition-transform duration-100 ease-out"
+                    style={{
+                        width: '1920px',
+                        height: `${contentHeight}px`,
+                        transform: `scale(${scale})`,
+                    }}
+                >
+                    {/* 1. TOOTH FAIRY (Top) */}
+                    <div className="absolute left-[100px] top-[200px] w-[1720px] z-30">
                         <div className="mb-12">
                             <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
-                                <div className="max-w-2xl">
-                                    <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
-                                        {virtualIdolText.title}
-                                    </h2>
-                                    {virtualIdolText.subtitle && (
-                                        <h3 className="text-5xl font-anton-sc uppercase tracking-tighter leading-tight mt-2">
-                                            {virtualIdolText.subtitle}
-                                        </h3>
-                                    )}
-                                </div>
-                                <div className="flex flex-col items-end shrink-0 ml-8">
-                                    <span className="text-6xl font-anton-sc tracking-tighter">
-                                        {virtualIdolText.year}
-                                    </span>
-                                    {virtualIdolText.note && (
-                                        <span className="text-sm font-bold font-sans mt-2">
-                                            {virtualIdolText.note}
-                                        </span>
-                                    )}
-                                </div>
+                                <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
+                                    {toothFairy.title}
+                                </h2>
+                                <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
+                                    {toothFairy.year}
+                                </span>
                             </div>
                             <div className="flex justify-between items-start">
-                                {virtualIdolText.descKo && (
+                                {toothFairy.descriptionKo && (
                                     <div
-                                        className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
-                                        dangerouslySetInnerHTML={{ __html: virtualIdolText.descKo }}
+                                        className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep"
+                                        dangerouslySetInnerHTML={{ __html: toothFairy.descriptionKo }}
                                     />
                                 )}
-                                {virtualIdolText.descEn && (
+                                {toothFairy.descriptionEn && (
                                     <div
-                                        className="w-[830px] text-xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
-                                        dangerouslySetInnerHTML={{ __html: virtualIdolText.descEn }}
+                                        className="w-[830px] text-2xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap font-anton-sc"
+                                        style={{ textWrap: 'pretty' }}
+                                        dangerouslySetInnerHTML={{ __html: toothFairy.descriptionEn }}
                                     />
                                 )}
                             </div>
                         </div>
                     </div>
-                )}
 
-                {/* Images */}
-                {Object.entries(layoutConfig)
-                    .sort(([filenameA], [filenameB]) => {
-                        const getZIndex = (name) => {
-                            if (name === '5.png') return 100;
-                            if (name === '8.png') return 90; // High z-index for 8.png
-                            return 10;
-                        };
-                        return getZIndex(filenameA) - getZIndex(filenameB);
-                    })
-                    .map(([filename, pos]) => {
-                        const src = getImageSrc(filename);
-                        if (!src) return null;
-
-                        let zIndex = 10;
-                        if (filename === '5.png') zIndex = 100;
-                        else if (filename === '8.png') zIndex = 90;
-
-                        return (
-                            <div
-                                key={filename}
-                                className="absolute"
-                                style={{
-                                    left: `${pos.x}px`,
-                                    top: `${pos.y}px`,
-                                    width: `${pos.w}px`,
-                                    height: `${pos.h}px`,
-                                    zIndex: zIndex
-                                }}
-                            >
-                                <img
-                                    src={src}
-                                    alt={filename}
-                                    className={`w-full h-full object-contain cursor-pointer ${filename === '5.png' || filename === '8.png' ? '' : 'mix-blend-multiply'}`}
-                                    onClick={() => setSelectedImage({ src, title: 'RGB WORK' })}
-                                    loading="lazy"
-                                />
+                    {/* 2. ANGEL HEART (Between 3.png and 4.png) */}
+                    {/* 3.png ends at 4986. 4.png starts at 6042. Placing at 5500. */}
+                    <div className="absolute left-[100px] top-[4800px] w-[1720px] z-30">
+                        <div className="mb-12">
+                            <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
+                                <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
+                                    {angelHeart.title}
+                                </h2>
+                                <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
+                                    {angelHeart.year}
+                                </span>
                             </div>
-                        );
-                    })}
-            </div>
+                            <div className="flex justify-between items-start">
+                                {angelHeart.descriptionKo && (
+                                    <div
+                                        className="w-[830px] text-3xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep"
+                                        dangerouslySetInnerHTML={{ __html: angelHeart.descriptionKo }}
+                                    />
+                                )}
+                                {angelHeart.descriptionEn && (
+                                    <div
+                                        className="w-[830px] text-3xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap font-anton-sc"
+                                        style={{ textWrap: 'pretty' }}
+                                        dangerouslySetInnerHTML={{ __html: angelHeart.descriptionEn }}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </div>
 
-            {/* Wrapper height placeholder */}
-            <div style={{ height: `${contentHeight * scale}px`, pointerEvents: 'none' }}></div>
+                    {/* 3. Text Section: EVERY ANGEL IS TERRIFYING (Between 9 and 10) */}
+                    {/* 9.png ends at ~16900. 10.png starts at 19071. Placing at 17800. */}
+                    {virtualIdolText && (
+                        <div className="absolute left-[100px] top-[17200px] w-[1720px] z-30">
+                            <div className="mb-12">
+                                <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
+                                    <div className="max-w-2xl">
+                                        <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
+                                            {virtualIdolText.title}
+                                        </h2>
+                                        {virtualIdolText.subtitle && (
+                                            <h3 className="text-5xl font-anton-sc uppercase tracking-tighter leading-tight mt-2">
+                                                {virtualIdolText.subtitle}
+                                            </h3>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-col items-end shrink-0 ml-8">
+                                        <span className="text-6xl font-anton-sc tracking-tighter">
+                                            {virtualIdolText.year}
+                                        </span>
+                                        {virtualIdolText.note && (
+                                            <span className="text-sm font-bold font-sans mt-2">
+                                                {virtualIdolText.note}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="flex justify-between items-start">
+                                    {virtualIdolText.descKo && (
+                                        <div
+                                            className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep"
+                                            dangerouslySetInnerHTML={{ __html: virtualIdolText.descKo }}
+                                        />
+                                    )}
+                                    {virtualIdolText.descEn && (
+                                        <div
+                                            className="w-[830px] text-2xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap font-anton-sc"
+                                            style={{ textWrap: 'pretty' }}
+                                            dangerouslySetInnerHTML={{ __html: virtualIdolText.descEn }}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Images */}
+                    {Object.entries(layoutConfig)
+                        .sort(([filenameA], [filenameB]) => {
+                            const getZIndex = (name) => {
+                                if (name === '5.png') return 100;
+                                if (name === '8.png') return 90; // High z-index for 8.png
+                                return 10;
+                            };
+                            return getZIndex(filenameA) - getZIndex(filenameB);
+                        })
+                        .map(([filename, pos]) => {
+                            const src = getImageSrc(filename);
+                            if (!src) return null;
+
+                            let zIndex = 10;
+                            if (filename === '5.png') zIndex = 100;
+                            else if (filename === '8.png') zIndex = 90;
+
+                            return (
+                                <div
+                                    key={filename}
+                                    className="absolute"
+                                    style={{
+                                        left: `${pos.x}px`,
+                                        top: `${pos.y}px`,
+                                        width: `${pos.w}px`,
+                                        height: `${pos.h}px`,
+                                        zIndex: zIndex
+                                    }}
+                                >
+                                    <img
+                                        src={src}
+                                        alt={filename}
+                                        className={`w-full h-full object-contain cursor-pointer ${filename === '5.png' || filename === '8.png' ? '' : 'mix-blend-multiply'}`}
+                                        onClick={() => setSelectedImage({ src, title: 'RGB WORK' })}
+                                        loading="lazy"
+                                    />
+                                </div>
+                            );
+                        })}
+                </div>
+            </div>
 
             {/* Lightbox */}
             {selectedImage && (

@@ -37,7 +37,7 @@ const CMYK = () => {
 
     // Calculate max height based on the last image
     const lastImage = layoutConfig['15.png'];
-    const contentHeight = lastImage ? lastImage.y + lastImage.h + 200 : 20000;
+    const contentHeight = lastImage ? lastImage.y + lastImage.h + 50 : 20000;
 
     useEffect(() => {
         const handleResize = () => {
@@ -76,112 +76,113 @@ const CMYK = () => {
         <div className="relative w-full min-h-screen bg-white selection:bg-pink-500 selection:text-white overflow-hidden">
             <Main activePage="cmyk" />
 
-            {/* Scalable Container */}
-            <div
-                className="relative origin-top-left transition-transform duration-100 ease-out"
-                style={{
-                    width: '1920px',
-                    height: `${contentHeight}px`,
-                    transform: `scale(${scale})`,
-                    marginBottom: '100px'
-                }}
-            >
-                {/* 1. Header & Text Section: WET TO DRY (Top) */}
-                <div className="absolute left-[100px] top-[200px] w-[1720px]">
-                    <div className="mb-12">
-                        <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
-                            <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
-                                {wetToDryProject.title}
-                            </h2>
-                            <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
-                                {wetToDryProject.year}
-                            </span>
-                        </div>
-                        <div className="flex justify-between items-start">
-                            {wetToDryProject.descKo && (
-                                <div
-                                    className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
-                                    dangerouslySetInnerHTML={{ __html: wetToDryProject.descKo }}
-                                />
-                            )}
-                            {wetToDryProject.descEn && (
-                                <div
-                                    className="w-[830px] text-xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
-                                    dangerouslySetInnerHTML={{ __html: wetToDryProject.descEn }}
-                                />
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                {/* 2. Text Section: PAIN TONE (Between 10 and 11) */}
-                {painToneData && (
-                    <div className="absolute left-[100px] top-[14000px] w-[1720px]">
+            {/* Wrapper to hold height */}
+            <div style={{ height: `${contentHeight * scale}px`, position: 'relative', width: '100%', overflow: 'hidden' }}>
+                {/* Scalable Container */}
+                <div
+                    className="absolute origin-top-left transition-transform duration-100 ease-out"
+                    style={{
+                        width: '1920px',
+                        height: `${contentHeight}px`,
+                        transform: `scale(${scale})`,
+                    }}
+                >
+                    {/* 1. Header & Text Section: WET TO DRY (Top) */}
+                    <div className="absolute left-[100px] top-[200px] w-[1720px]">
                         <div className="mb-12">
                             <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
                                 <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
-                                    {painToneData.title}
+                                    {wetToDryProject.title}
                                 </h2>
                                 <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
-                                    {painToneData.year}
+                                    {wetToDryProject.year}
                                 </span>
                             </div>
                             <div className="flex justify-between items-start">
-                                {painToneData.descKo && (
+                                {wetToDryProject.descKo && (
                                     <div
-                                        className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap"
-                                        dangerouslySetInnerHTML={{ __html: painToneData.descKo }}
+                                        className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep"
+                                        dangerouslySetInnerHTML={{ __html: wetToDryProject.descKo }}
                                     />
                                 )}
-                                {painToneData.descEn && (
+                                {wetToDryProject.descEn && (
                                     <div
-                                        className="w-[830px] text-xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap"
-                                        dangerouslySetInnerHTML={{ __html: painToneData.descEn }}
+                                        className="w-[830px] text-2xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap font-anton-sc"
+                                        style={{ textWrap: 'pretty' }}
+                                        dangerouslySetInnerHTML={{ __html: wetToDryProject.descEn }}
                                     />
                                 )}
                             </div>
                         </div>
                     </div>
-                )}
 
-                {/* 3. Images from Layout Config */}
-                {Object.entries(layoutConfig)
-                    .sort(([filenameA], [filenameB]) => {
-                        const getZIndex = (name) => name === '5.png' ? 100 : (name === '14.png' ? 20 : 10);
-                        return getZIndex(filenameA) - getZIndex(filenameB);
-                    })
-                    .map(([filename, pos]) => {
-                        const src = getImageSrc(filename);
-                        if (!src) return null;
-
-                        const zIndex = filename === '5.png' ? 100 : (filename === '14.png' ? 20 : 10);
-
-                        return (
-                            <div
-                                key={filename}
-                                className="absolute"
-                                style={{
-                                    left: `${pos.x}px`,
-                                    top: `${pos.y}px`,
-                                    width: `${pos.w}px`,
-                                    height: `${pos.h}px`,
-                                    zIndex: zIndex
-                                }}
-                            >
-                                <img
-                                    src={src}
-                                    alt={filename}
-                                    className={`w-full h-full object-contain cursor-pointer ${filename === '5.png' ? '' : 'mix-blend-multiply'}`}
-                                    onClick={() => setSelectedImage({ src, title: 'CMYK WORK' })}
-                                    loading="lazy"
-                                />
+                    {/* 2. Text Section: PAIN TONE (Between 10 and 11) */}
+                    {painToneData && (
+                        <div className="absolute left-[100px] top-[14000px] w-[1720px]">
+                            <div className="mb-12">
+                                <div className="flex justify-between items-baseline border-b border-black pb-4 mb-8">
+                                    <h2 className="text-7xl font-anton-sc uppercase tracking-tighter leading-none">
+                                        {painToneData.title}
+                                    </h2>
+                                    <span className="text-6xl font-anton-sc tracking-tighter shrink-0 ml-8">
+                                        {painToneData.year}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between items-start">
+                                    {painToneData.descKo && (
+                                        <div
+                                            className="w-[830px] text-2xl leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep"
+                                            dangerouslySetInnerHTML={{ __html: painToneData.descKo }}
+                                        />
+                                    )}
+                                    {painToneData.descEn && (
+                                        <div
+                                            className="w-[830px] text-2xl leading-relaxed text-gray-800 uppercase font-bold tracking-tight whitespace-pre-wrap font-anton-sc"
+                                            style={{ textWrap: 'pretty' }}
+                                            dangerouslySetInnerHTML={{ __html: painToneData.descEn }}
+                                        />
+                                    )}
+                                </div>
                             </div>
-                        );
-                    })}
-            </div>
+                        </div>
+                    )}
 
-            {/* Wrapper height placeholder to enable scrolling */}
-            <div style={{ height: `${contentHeight * scale}px`, pointerEvents: 'none' }}></div>
+                    {/* 3. Images from Layout Config */}
+                    {Object.entries(layoutConfig)
+                        .sort(([filenameA], [filenameB]) => {
+                            const getZIndex = (name) => name === '5.png' ? 100 : (name === '14.png' ? 20 : 10);
+                            return getZIndex(filenameA) - getZIndex(filenameB);
+                        })
+                        .map(([filename, pos]) => {
+                            const src = getImageSrc(filename);
+                            if (!src) return null;
+
+                            const zIndex = filename === '5.png' ? 100 : (filename === '14.png' ? 20 : 10);
+
+                            return (
+                                <div
+                                    key={filename}
+                                    className="absolute"
+                                    style={{
+                                        left: `${pos.x}px`,
+                                        top: `${pos.y}px`,
+                                        width: `${pos.w}px`,
+                                        height: `${pos.h}px`,
+                                        zIndex: zIndex
+                                    }}
+                                >
+                                    <img
+                                        src={src}
+                                        alt={filename}
+                                        className={`w-full h-full object-contain cursor-pointer ${filename === '5.png' ? '' : 'mix-blend-multiply'}`}
+                                        onClick={() => setSelectedImage({ src, title: 'CMYK WORK' })}
+                                        loading="lazy"
+                                    />
+                                </div>
+                            );
+                        })}
+                </div>
+            </div>
 
             {/* Lightbox */}
             {selectedImage && (
