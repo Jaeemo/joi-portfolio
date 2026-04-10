@@ -7,7 +7,7 @@ import gemPink from '../assets/Main_page/bead_pink.png';
 import centerLogo from '../assets/Main_page/center_logo.png';
 
 
-const Main = ({ activePage = 'main' }) => {
+const Main = ({ activePage = 'main', activeFilter = 'all', onFilterChange = null }) => {
   // 배경 보석 데이터
   const gems = [
     { top: '10%', left: '5%', type: 0, size: 'w-10 md:w-14' },
@@ -80,9 +80,9 @@ const Main = ({ activePage = 'main' }) => {
       <div className="relative z-10 w-full h-full max-w-6xl flex items-center justify-center">
 
         {/* 중앙 로고 이미지 */}
-        <div className="absolute z-20 pointer-events-none">
-          <img src={centerLogo} alt="Center Logo" className="w-24 md:w-36 drop-shadow-2xl animate-pulse-slow" />
-        </div>
+        <Link to="/info" className="absolute z-20 cursor-pointer">
+          <img src={centerLogo} alt="Center Logo" className="w-24 md:w-36 drop-shadow-2xl animate-pulse-slow transition-transform hover:scale-110" />
+        </Link>
 
         {/* --- Navigation X Layout --- */}
         {/* 1. TOP-LEFT (RGB WORK) */}
@@ -126,7 +126,7 @@ const Main = ({ activePage = 'main' }) => {
         </div>
 
         {/* --- Jewel Page Indicators --- */}
-        <div className="absolute bottom-10 md:bottom-20 left-1/2 -translate-x-1/2 flex gap-4 pointer-events-auto z-40">
+        <div className="absolute bottom-24 md:bottom-32 left-1/2 -translate-x-1/2 flex gap-4 pointer-events-auto z-40">
           {[0, 1, 2, 3].map((index) => (
             <div key={index} className="flex flex-col items-center">
               <img
@@ -143,10 +143,25 @@ const Main = ({ activePage = 'main' }) => {
       {/* --- Footer Email --- */}
       <a
         href="mailto:joichoi.work@gmail.com"
-        className="absolute bottom-4 md:bottom-10 text-gray-400 text-xs md:text-sm hover:text-black transition-colors font-mono tracking-widest uppercase z-40 pointer-events-auto"
+        className="absolute bottom-14 md:bottom-20 text-gray-400 text-xs md:text-sm hover:text-black transition-colors font-mono tracking-widest uppercase z-40 pointer-events-auto"
       >
         joichoi.work@gmail.com
       </a>
+
+      {/* --- Work Type Filter: Personal vs Company (Only on RGB / CMYK) --- */}
+      {(activePage === 'rgb' || activePage === 'cmyk') && onFilterChange && (
+        <div className="absolute bottom-[-10px] md:bottom-0 left-1/2 -translate-x-1/2 flex gap-8 z-40 pointer-events-auto items-center">
+          <div className="flex flex-col items-center cursor-pointer group" onClick={() => onFilterChange('personal')}>
+            <img src={activeFilter === 'personal' || activeFilter === 'all' ? gemPink : gemPurple} alt="Personal Work" className={`w-8 h-8 md:w-12 md:h-12 transition-all duration-300 ${activeFilter === 'personal' || activeFilter === 'all' ? 'scale-110 drop-shadow-md' : 'opacity-60 grayscale-[50%] group-hover:scale-110 group-hover:grayscale-0'}`} />
+            <span className={`text-xs md:text-sm font-bold mt-1 tracking-widest ${activeFilter === 'personal' || activeFilter === 'all' ? 'text-brand-pink' : 'text-gray-400 group-hover:text-gray-600'}`}>PERSONAL</span>
+          </div>
+
+          <div className="flex flex-col items-center cursor-pointer group" onClick={() => onFilterChange('commercial')}>
+            <img src={activeFilter === 'commercial' ? gemPink : gemPurple} alt="Commercial Work" className={`w-8 h-8 md:w-12 md:h-12 transition-all duration-300 ${activeFilter === 'commercial' ? 'scale-110 drop-shadow-md' : 'opacity-60 grayscale-[50%] group-hover:scale-110 group-hover:grayscale-0'}`} />
+            <span className={`text-xs md:text-sm font-bold mt-1 tracking-widest ${activeFilter === 'commercial' ? 'text-brand-pink' : 'text-gray-400 group-hover:text-gray-600'}`}>COMMERCIAL</span>
+          </div>
+        </div>
+      )}
 
       {/* CSS Styles */}
       <style>{`

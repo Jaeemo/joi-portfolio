@@ -16,7 +16,7 @@ export default {
       fontFamily: {
         // Impact 느낌의 폰트 (없으면 기본 sans로 대체됨)
         'display': ['Impact', 'Haettenschweiler', 'Arial Narrow Bold', 'sans-serif'],
-        'anton-sc': ['"Anton SC"', 'sans-serif'],
+        'pretendard': ['"Pretendard Variable"', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
       }
     },
   },
