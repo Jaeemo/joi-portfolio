@@ -31,7 +31,16 @@ const CMYK = () => {
         'word3.png': { x: 505, y: 10999, w: 480, h: 678 },
     };
 
+
+    const layoutConfigCommercial = {
+        'CMYK_Cm1.jpg': { x: 50, y: 50, w: 1800, h: 1200, source: 'images' },
+        '7-1.png': { x: 30, y: 1500, w: 610, h: 887, source: 'commercials' },
+        '7-2.png': { x: 650, y: 1500, w: 610, h: 887, source: 'commercials' },
+        '7-3.png': { x: 1270, y: 1500, w: 610, h: 887, source: 'commercials' },
+    };
+
     const [allImages, setAllImages] = useState({});
+    const [allCommercials, setAllCommercials] = useState({});
     const [selectedImage, setSelectedImage] = useState(null);
     const [scale, setScale] = useState(1);
     const [activeFilter, setActiveFilter] = useState('personal');
@@ -39,6 +48,10 @@ const CMYK = () => {
     // Calculate max height based on the last image
     const lastImage = layoutConfig['15.png'];
     const contentHeight = lastImage ? lastImage.y + lastImage.h + 50 : 20000;
+    
+    const lastComImage = layoutConfigCommercial['7-3.png'];
+    const comContentHeight = lastComImage ? lastComImage.y + lastComImage.h + 50 : 5000;
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -63,6 +76,19 @@ const CMYK = () => {
             setAllImages(imageMap);
         };
         loadImages();
+    }, []);
+
+    useEffect(() => {
+        const loadCommercials = () => {
+            const globImports = import.meta.glob('../assets/RGB-commercial/*.(png|jpg|jpeg|webp|gif|mp4)', { eager: true });
+            const imageMap = {};
+            Object.entries(globImports).forEach(([path, module]) => {
+                const fileName = path.split('/').pop();
+                imageMap[fileName] = module.default;
+            });
+            setAllCommercials(imageMap);
+        };
+        loadCommercials();
     }, []);
 
     const getImageSrc = (filename) => allImages[filename] || null;
@@ -192,86 +218,78 @@ const CMYK = () => {
             )}
 
             {activeFilter === 'commercial' && (
-                <div className="flex w-full min-h-screen bg-white">
-                    {/* Left: Description Sidebar */}
+                <div className="flex w-full">
+                    {/* Left: Description Sidebar Bar */}
                     <div
-                        className="border-r border-black/10 bg-white relative overflow-y-auto"
+                        className="border-r border-black/10 bg-white relative"
                         style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
                     >
-                        <div className="p-10 pt-12 text-[#FF00B3] font-pretendard">
-                            <h2 className="text-base font-bold uppercase tracking-tighter leading-tight mb-8">
-                                <div>2026 APRIL ISSUE</div>
-                                <div className="pl-6 font-extrabold mt-1 text-lg">DAZED KOREA<br/>-YAMADA RYOSUKE</div>
-                            </h2>
-
-                            <div className="mb-6">
-                                <h3 className="font-bold text-sm mb-1 mt-4 tracking-tight">ARTIST</h3>
-                                <p className="text-base font-extrabold leading-snug pl-6">
-                                    YAMADA RYOSUKE<br />
-                                    (HEY! SAY! JUMP)
-                                </p>
+                        {/* 1. YAMADA RYOSUKE */}
+                        <div className="absolute w-full p-10" style={{ top: `${50 * scale}px` }}>
+                            <div className="mb-16">
+                                <div className="border-b border-black pb-4 mb-6">
+                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
+                                        DAZED KOREA — YAMADA RYOSUKE
+                                    </h2>
+                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-2 block">
+                                        2026
+                                    </span>
+                                </div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">ARTIST</span>YAMADA RYOSUKE (HEY! SAY! JUMP)</div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">PUBLISHED IN</span>DAZED KOREA APRIL ISSUE</div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">CONCEPT</span>노력하는 왕자님 - 지금의 ‘야마다 료스케’가 되기까지. 여유만만의, 본투비 왕자라고 생각했던 그는 사실 엄청난 노력파다. 고군분투해야 했던 그는, 이제 모두의 왕자님이 되었다. 오늘도, 왕자는 고군분투한다!</div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">ROLE</span>화보 컨셉 기획 · 시안 제작 · 커뮤니케이션 · 인터뷰 · 텍스트 · 디지털 콘텐츠 제작</div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">FORMAT</span>14p 지면 · 디지털 콘텐츠 영상 2 · 인터뷰</div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">CREDITS</span>text JOI<br/>fashion RYO, LANG<br/>photograhy JANG DUKHWA<br/>hair & make-up JANG HAJUN</div>
                             </div>
+                        </div>
 
-                            <div className="mb-6">
-                                <h3 className="font-bold text-sm mb-1 mt-4 tracking-tight">PUBLISHED IN</h3>
-                                <p className="text-base font-extrabold leading-snug pl-6">
-                                    DAZED KOREA
-                                </p>
-                            </div>
-
-                            <div className="mb-6">
-                                <h3 className="font-bold text-sm mb-1 mt-4 tracking-tight">CONCEPT</h3>
-                                <p className="text-base font-extrabold leading-snug pl-6">
-                                    노력하는 왕자님 -지금의<br />
-                                    ‘야마다 료스케’가 되기까지.<br />
-                                    여유만만의, 본투비 왕자라<br />고 생각했던 그는 사실 엄청<br />난 노력파다. 고군분투해야<br />했던 그는, 이제 모두의 왕자<br />님이 되었다. 오늘도, 왕자는<br />고군분투한다!
-                                </p>
-                            </div>
-
-                            <div className="mb-6">
-                                <h3 className="font-bold text-sm mb-1 mt-4 tracking-tight">ROLE</h3>
-                                <p className="text-base font-extrabold leading-snug pl-6">
-                                    화보 컨셉 기획 · 시안 제작 ·<br />
-                                    커뮤니케이션 · 인터뷰 · 텍<br />스트 · 디지털 콘텐츠 제작
-                                </p>
-                            </div>
-
-                            <div className="mb-6">
-                                <h3 className="font-bold text-sm mb-1 mt-4 tracking-tight">FORMAT</h3>
-                                <p className="text-base font-extrabold leading-snug pl-6">
-                                    14p 지면 · 디지털 콘텐츠<br />영상 2 · 인터뷰
-                                </p>
-                            </div>
-
-                            <div className="mb-6 mt-10">
-                                <h3 className="font-bold text-sm mb-1 mt-4 tracking-tight">CREDITS</h3>
-                                <p className="text-base font-extrabold leading-snug pl-6">
-                                    text JOI<br />
-                                    fashion RYO, LANG<br />
-                                    photograhy JANG<br />DUKHWA<br />
-                                    hair & make-up JANG<br />HAJUN
-                                </p>
+                        {/* 2. DAZED KOREA APRIL ISSUE */}
+                        <div className="absolute w-full p-10" style={{ top: `${1500 * scale}px` }}>
+                            <div className="mb-16">
+                                <div className="border-b border-black pb-4 mb-6">
+                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
+                                        DAZED KOREA<br/>APRIL ISSUE
+                                    </h2>
+                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-2 block">
+                                        2026
+                                    </span>
+                                </div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
+                                    14 pages / 6 착장<br/>데이즈드 코리아 4월호
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Right: Image Container */}
-                    <div className="flex-1 relative overflow-auto flex justify-center bg-white p-4">
-                        {allImages['CMYK_Cm1.jpg'] ? (
-                            <img
-                                src={allImages['CMYK_Cm1.jpg']}
-                                alt="CMYK Commercial 1"
-                                className="w-full h-auto object-contain cursor-pointer max-w-5xl"
-                                onClick={() => setSelectedImage({ src: allImages['CMYK_Cm1.jpg'], title: 'DAZED KOREA - YAMADA RYOSUKE' })}
-                            />
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                Loading image...
-                            </div>
-                        )}
+                    {/* Right: Image Canvas */}
+                    <div
+                        className="flex-1 relative overflow-hidden"
+                        style={{ height: `${comContentHeight * scale}px` }}
+                    >
+                        <div
+                            className="absolute origin-top-left transition-transform duration-100 ease-out"
+                            style={{
+                                width: '1920px',
+                                height: `${comContentHeight}px`,
+                                transform: `scale(${scale})`,
+                            }}
+                        >
+                            {Object.entries(layoutConfigCommercial).map(([filename, pos]) => {
+                                const src = pos.source === 'images' ? allImages[filename] : allCommercials[filename];
+                                if (!src) return null;
+
+                                return (
+                                    <div key={filename} className="absolute drop-shadow-xl hover:scale-[1.02] transition-transform cursor-pointer" style={{ left: `${pos.x}px`, top: `${pos.y}px`, width: `${pos.w}px`, height: `${pos.h}px` }}>
+                                        <img src={src} alt={filename} className="w-full h-full object-contain" onClick={() => setSelectedImage({ src, title: 'COMMERCIAL WORK' })} loading="lazy" />
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             )}
+
 
             {/* Lightbox */}
             {selectedImage && (
