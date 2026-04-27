@@ -21,7 +21,7 @@ const Info = () => {
               <div>
                 <p className="mb-1">2025 (KR)</p>
                 <p className="text-xl md:text-2xl font-bold uppercase">DAZED KOREA</p>
-                <p className="text-gray-600">- Graphic Deisgner/Digital editor</p>
+                <p className="text-gray-600">- GRAPHIC DESIGNER/DIGITAL EDITOR</p>
               </div>
             </div>
 

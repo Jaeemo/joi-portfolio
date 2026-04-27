@@ -48,7 +48,7 @@ const CMYK = () => {
     // Calculate max height based on the last image
     const lastImage = layoutConfig['15.png'];
     const contentHeight = lastImage ? lastImage.y + lastImage.h + 50 : 20000;
-    
+
     const lastComImage = layoutConfigCommercial['7-3.png'];
     const comContentHeight = lastComImage ? lastComImage.y + lastComImage.h + 50 : 5000;
 
@@ -240,26 +240,10 @@ const CMYK = () => {
                                 <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">CONCEPT</span>노력하는 왕자님 - 지금의 ‘야마다 료스케’가 되기까지. 여유만만의, 본투비 왕자라고 생각했던 그는 사실 엄청난 노력파다. 고군분투해야 했던 그는, 이제 모두의 왕자님이 되었다. 오늘도, 왕자는 고군분투한다!</div>
                                 <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">ROLE</span>화보 컨셉 기획 · 시안 제작 · 커뮤니케이션 · 인터뷰 · 텍스트 · 디지털 콘텐츠 제작</div>
                                 <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">FORMAT</span>14p 지면 · 디지털 콘텐츠 영상 2 · 인터뷰</div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">CREDITS</span>text JOI<br/>fashion RYO, LANG<br/>photograhy JANG DUKHWA<br/>hair & make-up JANG HAJUN</div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">CREDITS</span>text JOI<br />fashion RYO, LANG<br />photograhy JANG DUKHWA<br />hair & make-up JANG HAJUN</div>
                             </div>
                         </div>
 
-                        {/* 2. DAZED KOREA APRIL ISSUE */}
-                        <div className="absolute w-full p-10" style={{ top: `${1500 * scale}px` }}>
-                            <div className="mb-16">
-                                <div className="border-b border-black pb-4 mb-6">
-                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
-                                        DAZED KOREA<br/>APRIL ISSUE
-                                    </h2>
-                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-2 block">
-                                        2026
-                                    </span>
-                                </div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
-                                    14 pages / 6 착장<br/>데이즈드 코리아 4월호
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     {/* Right: Image Canvas */}

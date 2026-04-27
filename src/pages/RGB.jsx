@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Main from './Main';
 import { rgbProjects } from '../data/projects';
 
+const angeliteImageY = 15744;
+const angeliteTextY = 15364;
+
 const layoutConfig = {
     '1.png': { x: 0, y: 150, w: 1920, h: 1080 },
     '2.png': { x: 0, y: 1230, w: 1920, h: 1080 },
@@ -13,41 +16,33 @@ const layoutConfig = {
     '7.png': { x: 59, y: 9257, w: 1802, h: 2988 },
     '8.png': { x: 802, y: 12545, w: 1139, h: 1485 },
     '9.png': { x: 59, y: 13295, w: 1202, h: 1669 },
-    '10.png': { x: 0, y: 15164, w: 1920, h: 1080 },
-    '11.png': { x: -104, y: 16149, w: 2128, h: 1270 },
-    '12.png': { x: 50, y: 17354, w: 1813, h: 1867 },
-    '13.png': { x: -45, y: 19221, w: 2010, h: 1220 },
-    '14-1.png': { x: -23, y: 20441, w: 1002, h: 1336 },
-    '14-2.png': { x: 940, y: 20441, w: 1002, h: 1336 },
+    '10.png': { x: 0, y: angeliteImageY, w: 1920, h: 1080 },
+    '2-1.png': { x: 30, y: 18184, w: 450, h: 675, source: 'commercials' },
+    '2-2.png': { x: 500, y: 18184, w: 450, h: 675, source: 'commercials' },
+    '2-3.png': { x: 970, y: 18184, w: 450, h: 675, source: 'commercials' },
+    '2-4.png': { x: 1440, y: 18184, w: 450, h: 675, source: 'commercials' },
+    '3-1-3-transparent.png': { x: 260, y: 19300, w: 1400, h: 1400, source: 'commercials' },
+    '3-1-2.png': { x: 250, y: 20100, w: 440, h: 440, source: 'commercials' },
+    '3-1-1.png': { x: 1200, y: 19550, w: 440, h: 440, source: 'commercials' },
+    '3-2.png': { x: 0, y: 20604, w: 440, h: 660, source: 'commercials' },
+    '3-3.png': { x: 480, y: 20604, w: 440, h: 660, source: 'commercials' },
+    '3-4.png': { x: 960, y: 20604, w: 440, h: 660, source: 'commercials' },
+    '3-5.png': { x: 1440, y: 20604, w: 440, h: 660, source: 'commercials' },
+    'video-1.mp4': { x: 0, y: 21650, w: 920, h: 517, source: 'commercials' },
+    'video-2.mp4': { x: 960, y: 21650, w: 920, h: 517, source: 'commercials' },
 };
 
 const layoutConfigCommercial = {
-    '2-1.png': { x: 0, y: 50, w: 920, h: 1380, source: 'commercials' },
-    '2-2.png': { x: 960, y: 50, w: 920, h: 1380, source: 'commercials' },
-    '2-3.png': { x: 0, y: 1470, w: 920, h: 1380, source: 'commercials' },
-    '2-4.png': { x: 960, y: 1470, w: 920, h: 1380, source: 'commercials' },
+    '4-1.png': { x: 0, y: 50, w: 600, h: 1066, source: 'commercials' },
+    '4-2.png': { x: 640, y: 50, w: 600, h: 1066, source: 'commercials' },
+    '4-3.png': { x: 1280, y: 50, w: 600, h: 1066, source: 'commercials' },
 
-    '3-1-3.png': { x: 0, y: 3100, w: 920, h: 920, source: 'commercials' },
-    '3-1-2.png': { x: 960, y: 3100, w: 440, h: 440, source: 'commercials' },
-    '3-1-1.png': { x: 1440, y: 3100, w: 440, h: 440, source: 'commercials' },
-    '3-2.png': { x: 0, y: 4060, w: 440, h: 660, source: 'commercials' },
-    '3-3.png': { x: 480, y: 4060, w: 440, h: 660, source: 'commercials' },
-    '3-4.png': { x: 960, y: 4060, w: 440, h: 660, source: 'commercials' },
-    '3-5.png': { x: 1440, y: 4060, w: 440, h: 660, source: 'commercials' },
+    '5-1video.mp4': { x: 0, y: 1450, w: 600, h: 1066, source: 'commercials' },
+    '5-2video.mp4': { x: 640, y: 1450, w: 600, h: 1066, source: 'commercials' },
+    '5-3video.mp4': { x: 1280, y: 1450, w: 600, h: 1066, source: 'commercials' },
 
-    'video-1.mp4': { x: 0, y: 5100, w: 920, h: 517, source: 'commercials' },
-    'video-2.mp4': { x: 960, y: 5100, w: 920, h: 517, source: 'commercials' },
-
-    '4-1.png': { x: 0, y: 6000, w: 600, h: 1066, source: 'commercials' },
-    '4-2.png': { x: 640, y: 6000, w: 600, h: 1066, source: 'commercials' },
-    '4-3.png': { x: 1280, y: 6000, w: 600, h: 1066, source: 'commercials' },
-
-    '5-1video.mp4': { x: 0, y: 7400, w: 600, h: 1066, source: 'commercials' },
-    '5-2video.mp4': { x: 640, y: 7400, w: 600, h: 1066, source: 'commercials' },
-    '5-3video.mp4': { x: 1280, y: 7400, w: 600, h: 1066, source: 'commercials' },
-
-    '6-1.jpg': { x: 0, y: 8800, w: 920, h: 1186, source: 'commercials' },
-    '6-2.png': { x: 960, y: 8800, w: 920, h: 1186, source: 'commercials' },
+    '6-1.jpg': { x: 0, y: 2850, w: 920, h: 1186, source: 'commercials' },
+    '6-2.png': { x: 960, y: 2850, w: 920, h: 1186, source: 'commercials' },
 };
 
 const SIDEBAR_WIDTH = 420;
@@ -60,7 +55,7 @@ const RGB = () => {
     const [allCommercials, setAllCommercials] = useState({});
 
     // Calculate max height based on the last image
-    const lastImage = layoutConfig['14-2.png'];
+    const lastImage = layoutConfig['video-1.mp4'] || layoutConfig['3-5.png'] || layoutConfig['14-2.png'];
     const contentHeight = lastImage ? lastImage.y + lastImage.h + 50 : 30000;
 
     const lastComImage = layoutConfigCommercial['6-2.png'];
@@ -179,10 +174,12 @@ const RGB = () => {
                             </div>
                         </div>
 
-                        {/* VIRTUAL IDOL - ANGELITE */}
-                        {virtualIdolText && (
-                            <div className="absolute w-full p-10" style={{ top: `${(layoutConfig['10.png']?.y || 0) * scale}px` }}>
-                                <div className="mb-16">
+                        {/* ALL ANGELITE TEXTS COMBINED TO PREVENT OVERLAP */}
+                        <div className="absolute w-full p-10 flex flex-col gap-16" style={{ top: `${angeliteTextY * scale}px` }}>
+
+                            {/* VIRTUAL IDOL - ANGELITE (Original text restored) */}
+                            {virtualIdolText && (
+                                <div>
                                     <div className="border-b border-black pb-4 mb-6">
                                         <h2 className="text-3xl font-pretendard font-bold uppercase tracking-tighter leading-none">
                                             {virtualIdolText.title}
@@ -215,8 +212,72 @@ const RGB = () => {
                                         />
                                     )}
                                 </div>
+                            )}
+
+                            {/* ANGELITE DETAILS (Moved from commercial) */}
+                            <div className="mt-12">
+                                <div className="border-b border-black pb-4 mb-6">
+                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none mb-2">VIRTUAL IDOL — ANGELITE</h2>
+                                    <h3 className="text-xl font-pretendard font-bold tracking-tighter leading-tight mt-2 text-gray-600">Every angel is terrifying *</h3>
+                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-4 block">2024</span>
+                                </div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
+                                    <span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">ROLE</span>
+                                    컨셉기획 · 3D캐릭터 디자인 · 모션 트래킹 · AI 보이스 디렉션 · 아트 디렉션/제작
+                                </div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
+                                    <span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">TOOL</span>
+                                    Adobe After Effects · Adobe Illustrator · Adobe Premiere Pro · Adobe Indesign · Blender
+                                </div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
+                                    <span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">PROJECT</span>
+                                    네 명의 캐릭터로 구성된 Angelite는 모두 하나의 디자이너의 움직임을 기반으로 만들어졌다. 모션 트래킹 기술을 통해 디자이너의 몸짓을 실시간으로 반영하며, 음성은 AI 기반 변조를 통해 각기 다른 인격과 감정, 말투를 갖춘 개별 캐릭터로 연기된다. 겉보기에 이들은 실존하는 인물처럼 보이지만, 실체는 오직 하나뿐이다. Angelite는 실재와 허구, 자아와 이미지, 감정과 알고리즘 사이의 긴장을 드러내는 프로젝트이다.
+                                </div>
                             </div>
-                        )}
+
+                        </div>
+
+                        {/* ANGELITE CD GRAPHICS (Positioned alongside the images) */}
+                        <div className="absolute w-full p-10" style={{ top: `${19300 * scale}px` }}>
+                            <div className="mb-16">
+                                <div className="border-b border-black pb-4 mb-6">
+                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">ANGELITE CD GRAPHICS</h2>
+                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-2 block">2024</span>
+                                </div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep">
+                                    150x150 mm<br />
+                                    Angelite Album Graphic / Logo<br />
+                                    앤젤라이트 앨범 그래픽/로고
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ANGELITE PHOTOCARDS (Positioned alongside the photocard images) */}
+                        <div className="absolute w-full p-10" style={{ top: `${20604 * scale}px` }}>
+                            <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep">
+                                55x85 mm<br />
+                                Virtual idol character photo card<br />
+                                버츄얼 아이돌 포토카드
+                            </div>
+                        </div>
+
+                        {/* ANGELITE VIDEOS (Positioned alongside the videos) */}
+                        <div className="absolute w-full p-10" style={{ top: `${21400 * scale}px` }}>
+                            <div className="mb-16">
+                                <div className="border-b border-black pb-4 mb-6">
+                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">ANGELITE VIDEOS</h2>
+                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-2 block">2024</span>
+                                </div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep">
+                                    1920x1080 px<br />
+                                    0:46<br />
+                                    Angelite Teaser Video<br /><br />
+                                    1920x1080 px<br />
+                                    2:04<br />
+                                    Angelite Fake Youtube Live Video
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Right: Image Canvas (original absolute positioning) */}
@@ -242,13 +303,31 @@ const RGB = () => {
                                     return getZIndex(filenameA) - getZIndex(filenameB);
                                 })
                                 .map(([filename, pos]) => {
-                                    const src = getImageSrc(filename);
+                                    const src = pos.source === 'commercials' ? allCommercials[filename] : getImageSrc(filename);
                                     if (!src) return null;
 
                                     let zIndex = 10;
                                     if (filename === '5.png') zIndex = 100;
                                     else if (filename === '8.png') zIndex = 90;
                                     else if (filename === '4-1.png') zIndex = 80;
+
+                                    if (filename.endsWith('.mp4')) {
+                                        return (
+                                            <div
+                                                key={filename}
+                                                className="absolute drop-shadow-2xl"
+                                                style={{
+                                                    left: `${pos.x}px`,
+                                                    top: `${pos.y}px`,
+                                                    width: `${pos.w}px`,
+                                                    height: `${pos.h}px`,
+                                                    zIndex: zIndex
+                                                }}
+                                            >
+                                                <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover rounded-xl" />
+                                            </div>
+                                        );
+                                    }
 
                                     return (
                                         <div
@@ -283,58 +362,8 @@ const RGB = () => {
                         className="border-r border-black/10 bg-white relative"
                         style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
                     >
-                        {/* 2. ANGELITE */}
-                        <div className="absolute w-full p-10" style={{ top: `${50 * scale}px` }}>
-                            <div className="mb-16">
-                                <div className="border-b border-black pb-4 mb-6">
-                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none mb-2">VIRTUAL IDOL — ANGELITE</h2>
-                                    <h3 className="text-xl font-pretendard font-bold tracking-tighter leading-tight mt-2 text-gray-600">Every angel is terrifying *</h3>
-                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-4 block">2024</span>
-                                </div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
-                                    <span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">ROLE</span>
-                                    컨셉기획 · 3D캐릭터 디자인 · 모션 트래킹 · AI 보이스 디렉션 · 아트 디렉션/제작
-                                </div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
-                                    <span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">TOOL</span>
-                                    Adobe After Effects · Adobe Illustrator · Adobe Premiere Pro · Adobe Indesign · Blender
-                                </div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
-                                    <span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">PROJECT</span>
-                                    네 명의 캐릭터로 구성된 Angelite는 모두 하나의 디자이너의 움직임을 기반으로 만들어졌다. 모션 트래킹 기술을 통해 디자이너의 몸짓을 실시간으로 반영하며, 음성은 AI 기반 변조를 통해 각기 다른 인격과 감정, 말투를 갖춘 개별 캐릭터로 연기된다. 겉보기에 이들은 실존하는 인물처럼 보이지만, 실체는 오직 하나뿐이다. Angelite는 실재와 허구, 자아와 이미지, 감정과 알고리즘 사이의 긴장을 드러내는 프로젝트이다.
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* 3. CD GRAPHICS */}
-                        <div className="absolute w-full p-10" style={{ top: `${3100 * scale}px` }}>
-                            <div className="mb-16">
-                                <div className="border-b border-black pb-4 mb-6">
-                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">ANGELITE CD GRAPHICS</h2>
-                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-2 block">2024</span>
-                                </div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
-                                    엔젤라이트 앨범 그래픽/로고<br />(150x150 mm)<br /><br />
-                                    버츄얼 아이돌 포토카드<br />(55x85 mm)
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* 4. VIDEOS */}
-                        <div className="absolute w-full p-10" style={{ top: `${5100 * scale}px` }}>
-                            <div className="mb-16">
-                                <div className="border-b border-black pb-4 mb-6">
-                                    <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">ANGELITE VIDEOS</h2>
-                                    <span className="text-3xl font-pretendard font-bold tracking-tighter mt-2 block">2024</span>
-                                </div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-6">
-                                    Angelite Teaser Video<br />Angelite Fake Youtube Live Video
-                                </div>
-                            </div>
-                        </div>
-
                         {/* 5. DIDI DAZED */}
-                        <div className="absolute w-full p-10" style={{ top: `${6000 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={{ top: `${50 * scale}px` }}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">DIDI — DAZED KOREA ORIGINAL CHARACTER</h2>
@@ -347,7 +376,7 @@ const RGB = () => {
                         </div>
 
                         {/* 6. DAZED MONTHLY */}
-                        <div className="absolute w-full p-10" style={{ top: `${7400 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={{ top: `${1450 * scale}px` }}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">DAZED KOREA MONTHLY HIGHLIGHTS</h2>
@@ -357,7 +386,7 @@ const RGB = () => {
                         </div>
 
                         {/* 7. MONCLER */}
-                        <div className="absolute w-full p-10" style={{ top: `${8800 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={{ top: `${2850 * scale}px` }}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">DAZED KOREA — BRAND COLLABORATION VFX</h2>
