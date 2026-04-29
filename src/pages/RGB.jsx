@@ -60,12 +60,9 @@ const RGB = () => {
 
             {/* Content Section - Filter based */}
             {activeFilter === 'personal' && (
-                <div className="flex w-full">
+                <div className="work-section flex w-full">
                     {/* Left: Description Sidebar Bar */}
-                    <div
-                        className="hidden md:block border-r border-black/10 bg-white relative"
-                        style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
-                    >
+                    <div className="work-sidebar border-r border-black/10 bg-white relative">
                         {/* TOOTH FAIRY */}
                         <div className="absolute w-full p-10" style={{ top: `${(rgbPersonalLayout['1.png']?.y || 0) * scale}px` }}>
                             <div className="mb-16">
@@ -239,12 +236,9 @@ const RGB = () => {
                 </div>
             )}
             {activeFilter === 'commercial' && (
-                <div className="flex w-full">
+                <div className="work-section flex w-full">
                     {/* Left: Description Sidebar Bar */}
-                    <div
-                        className="hidden md:block border-r border-black/10 bg-white relative"
-                        style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
-                    >
+                    <div className="work-sidebar border-r border-black/10 bg-white relative">
                         {/* 5. DIDI DAZED */}
                         <div className="absolute w-full p-10" style={{ top: `${50 * scale}px` }}>
                             <div className="mb-16">

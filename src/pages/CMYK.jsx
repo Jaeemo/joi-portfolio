@@ -56,12 +56,9 @@ const CMYK = () => {
 
             {/* Content Section - Filter based */}
             {activeFilter === 'personal' && (
-                <div className="flex w-full">
+                <div className="work-section flex w-full">
                     {/* Left: Description Sidebar Bar */}
-                    <div
-                        className="hidden md:block border-r border-black/10 bg-white relative"
-                        style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
-                    >
+                    <div className="work-sidebar border-r border-black/10 bg-white relative">
                         {/* WET TO DRY */}
                         <div className="absolute w-full p-10" style={{ top: `${(cmykPersonalLayout['1.png']?.y || 0) * scale}px` }}>
                             <div className="mb-16">
@@ -133,12 +130,9 @@ const CMYK = () => {
             )}
 
             {activeFilter === 'commercial' && (
-                <div className="flex w-full">
+                <div className="work-section flex w-full">
                     {/* Left: Description Sidebar Bar */}
-                    <div
-                        className="hidden md:block border-r border-black/10 bg-white relative"
-                        style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
-                    >
+                    <div className="work-sidebar border-r border-black/10 bg-white relative">
                         {/* 1. YAMADA RYOSUKE */}
                         <div className="absolute w-full p-10" style={{ top: `${50 * scale}px` }}>
                             <div className="mb-16">
