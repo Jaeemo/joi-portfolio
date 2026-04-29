@@ -98,7 +98,7 @@ This reflection led me to create a way to remember sorrow with the same weight a
                 descEn: `<b>My life has been a history of wounds.
 Over a set period of time, I documented the bruises and injuries that appeared on my body—both the subtle marks that fade quickly and the deeper ones that lingered. From these images, I extracted the colors of each wound and compiled them into a unified color chart. These colors were then transformed into a usable Adobe color swatch, which became the basis for a series of works including
 a website, printed publications, and stickers. While wounds are typically seen as something painful or to be hidden, this project seeks to reframe them as a visual
-language—a personal archive and memory. 
+language—a personal archive and memory.
 Each injury, instead of being erased, is recorded, named, and made shareable in the form of color.</b>`
             },
             { type: 'full', images: ['11.png'] },
@@ -109,4 +109,3 @@ Each injury, instead of being erased, is recorded, named, and made shareable in 
         layout: 'custom-grid'
     }
 ];
-

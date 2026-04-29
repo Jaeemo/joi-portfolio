@@ -1,65 +1,34 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import Main from './Main';
+import Lightbox from '../components/Lightbox';
+import WorkCanvas from '../components/WorkCanvas';
+import {
+    SIDEBAR_WIDTH,
+    angeliteTextY,
+    getLayoutHeight,
+    rgbCommercialLayout,
+    rgbPersonalLayout,
+} from '../config/workLayouts';
 import { rgbProjects } from '../data/projects';
+import { rgbCommercialAssets, rgbWorkAssets } from '../lib/assets';
 
-const angeliteImageY = 15744;
-const angeliteTextY = 15364;
-
-const layoutConfig = {
-    '1.png': { x: 0, y: 150, w: 1920, h: 1080 },
-    '2.png': { x: 0, y: 1230, w: 1920, h: 1080 },
-    '3.png': { x: 0, y: 2310, w: 1920, h: 1080 },
-    '4.png': { x: -709, y: 3590, w: 3338, h: 2808 },
-    '4-1.png': { x: 1350, y: 5698, w: 450, h: 600 },
-    '5.png': { x: 0, y: 6334, w: 1209, h: 1600 },
-    '6.png': { x: 382, y: 7207, w: 1538, h: 2050 },
-    '7.png': { x: 59, y: 9257, w: 1802, h: 2988 },
-    '8.png': { x: 802, y: 12545, w: 1139, h: 1485 },
-    '9.png': { x: 59, y: 13295, w: 1202, h: 1669 },
-    '10.png': { x: 0, y: angeliteImageY, w: 1920, h: 1080 },
-    '2-1.png': { x: 30, y: 18184, w: 450, h: 675, source: 'commercials' },
-    '2-2.png': { x: 500, y: 18184, w: 450, h: 675, source: 'commercials' },
-    '2-3.png': { x: 970, y: 18184, w: 450, h: 675, source: 'commercials' },
-    '2-4.png': { x: 1440, y: 18184, w: 450, h: 675, source: 'commercials' },
-    '3-1-3-transparent.png': { x: 260, y: 19300, w: 1400, h: 1400, source: 'commercials' },
-    '3-1-2.png': { x: 250, y: 20100, w: 440, h: 440, source: 'commercials' },
-    '3-1-1.png': { x: 1200, y: 19550, w: 440, h: 440, source: 'commercials' },
-    '3-2.png': { x: 0, y: 20604, w: 440, h: 660, source: 'commercials' },
-    '3-3.png': { x: 480, y: 20604, w: 440, h: 660, source: 'commercials' },
-    '3-4.png': { x: 960, y: 20604, w: 440, h: 660, source: 'commercials' },
-    '3-5.png': { x: 1440, y: 20604, w: 440, h: 660, source: 'commercials' },
-    'video-1.mp4': { x: 0, y: 21650, w: 920, h: 517, source: 'commercials' },
-    'video-2.mp4': { x: 960, y: 21650, w: 920, h: 517, source: 'commercials' },
+const getRgbPersonalZIndex = (filename) => {
+    if (filename === '5.png') return 100;
+    if (filename === '8.png') return 90;
+    if (filename === '4-1.png') return 80;
+    return 10;
 };
 
-const layoutConfigCommercial = {
-    '4-1.png': { x: 0, y: 50, w: 600, h: 1066, source: 'commercials' },
-    '4-2.png': { x: 640, y: 50, w: 600, h: 1066, source: 'commercials' },
-    '4-3.png': { x: 1280, y: 50, w: 600, h: 1066, source: 'commercials' },
-
-    '5-1video.mp4': { x: 0, y: 1450, w: 600, h: 1066, source: 'commercials' },
-    '5-2video.mp4': { x: 640, y: 1450, w: 600, h: 1066, source: 'commercials' },
-    '5-3video.mp4': { x: 1280, y: 1450, w: 600, h: 1066, source: 'commercials' },
-
-    '6-1.jpg': { x: 0, y: 2850, w: 920, h: 1186, source: 'commercials' },
-    '6-2.png': { x: 960, y: 2850, w: 920, h: 1186, source: 'commercials' },
-};
-
-const SIDEBAR_WIDTH = 420;
+const getRgbPersonalImageClass = (filename) =>
+    `w-full h-full object-contain cursor-pointer ${filename === '5.png' || filename === '8.png' ? '' : 'mix-blend-multiply'}`;
 
 const RGB = () => {
-    const [allImages, setAllImages] = useState({});
     const [selectedImage, setSelectedImage] = useState(null);
     const [scale, setScale] = useState(1);
     const [activeFilter, setActiveFilter] = useState('personal');
-    const [allCommercials, setAllCommercials] = useState({});
 
-    // Calculate max height based on the last image
-    const lastImage = layoutConfig['video-1.mp4'] || layoutConfig['3-5.png'] || layoutConfig['14-2.png'];
-    const contentHeight = lastImage ? lastImage.y + lastImage.h + 50 : 30000;
-
-    const lastComImage = layoutConfigCommercial['6-2.png'];
-    const comContentHeight = lastComImage ? lastComImage.y + lastComImage.h + 50 : 10000;
+    const contentHeight = getLayoutHeight(rgbPersonalLayout, 'video-1.mp4', 30000);
+    const comContentHeight = getLayoutHeight(rgbCommercialLayout, '6-2.png', 10000);
 
     useEffect(() => {
         const handleResize = () => {
@@ -73,33 +42,8 @@ const RGB = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        const loadImages = () => {
-            const globImports = import.meta.glob('../assets/RGB_work/*.(png|jpg|jpeg|webp|gif)', { eager: true });
-            const imageMap = {};
-            Object.entries(globImports).forEach(([path, module]) => {
-                const fileName = path.split('/').pop();
-                imageMap[fileName] = module.default;
-            });
-            setAllImages(imageMap);
-        };
-        loadImages();
-    }, []);
-
-    useEffect(() => {
-        const loadCommercials = () => {
-            const globImports = import.meta.glob('../assets/RGB-commercial/*.(png|jpg|jpeg|webp|gif|mp4)', { eager: true });
-            const imageMap = {};
-            Object.entries(globImports).forEach(([path, module]) => {
-                const fileName = path.split('/').pop();
-                imageMap[fileName] = module.default;
-            });
-            setAllCommercials(imageMap);
-        };
-        loadCommercials();
-    }, []);
-
-    const getImageSrc = (filename) => allImages[filename] || null;
+    const resolveRgbSrc = (filename, position) =>
+        position.source === 'commercials' ? rgbCommercialAssets[filename] : rgbWorkAssets[filename];
 
     // Get project data
     const toothFairy = rgbProjects[0];
@@ -121,7 +65,7 @@ const RGB = () => {
                         style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
                     >
                         {/* TOOTH FAIRY */}
-                        <div className="absolute w-full p-10" style={{ top: `${(layoutConfig['1.png']?.y || 0) * scale}px` }}>
+                        <div className="absolute w-full p-10" style={{ top: `${(rgbPersonalLayout['1.png']?.y || 0) * scale}px` }}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
@@ -148,7 +92,7 @@ const RGB = () => {
                         </div>
 
                         {/* ANGEL HEART */}
-                        <div className="absolute w-full p-10" style={{ top: `${(layoutConfig['4.png']?.y || 0) * scale}px` }}>
+                        <div className="absolute w-full p-10" style={{ top: `${(rgbPersonalLayout['4.png']?.y || 0) * scale}px` }}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
@@ -280,79 +224,16 @@ const RGB = () => {
                         </div>
                     </div>
 
-                    {/* Right: Image Canvas (original absolute positioning) */}
-                    <div
-                        className="flex-1 relative overflow-hidden"
-                        style={{ height: `${contentHeight * scale}px` }}
-                    >
-                        <div
-                            className="absolute origin-top-left transition-transform duration-100 ease-out"
-                            style={{
-                                width: '1920px',
-                                height: `${contentHeight}px`,
-                                transform: `scale(${scale})`,
-                            }}
-                        >
-                            {Object.entries(layoutConfig)
-                                .sort(([filenameA], [filenameB]) => {
-                                    const getZIndex = (name) => {
-                                        if (name === '5.png') return 100;
-                                        if (name === '8.png') return 90;
-                                        return 10;
-                                    };
-                                    return getZIndex(filenameA) - getZIndex(filenameB);
-                                })
-                                .map(([filename, pos]) => {
-                                    const src = pos.source === 'commercials' ? allCommercials[filename] : getImageSrc(filename);
-                                    if (!src) return null;
-
-                                    let zIndex = 10;
-                                    if (filename === '5.png') zIndex = 100;
-                                    else if (filename === '8.png') zIndex = 90;
-                                    else if (filename === '4-1.png') zIndex = 80;
-
-                                    if (filename.endsWith('.mp4')) {
-                                        return (
-                                            <div
-                                                key={filename}
-                                                className="absolute drop-shadow-2xl"
-                                                style={{
-                                                    left: `${pos.x}px`,
-                                                    top: `${pos.y}px`,
-                                                    width: `${pos.w}px`,
-                                                    height: `${pos.h}px`,
-                                                    zIndex: zIndex
-                                                }}
-                                            >
-                                                <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover rounded-xl" />
-                                            </div>
-                                        );
-                                    }
-
-                                    return (
-                                        <div
-                                            key={filename}
-                                            className="absolute"
-                                            style={{
-                                                left: `${pos.x}px`,
-                                                top: `${pos.y}px`,
-                                                width: `${pos.w}px`,
-                                                height: `${pos.h}px`,
-                                                zIndex: zIndex
-                                            }}
-                                        >
-                                            <img
-                                                src={src}
-                                                alt={filename}
-                                                className={`w-full h-full object-contain cursor-pointer ${filename === '5.png' || filename === '8.png' ? '' : 'mix-blend-multiply'}`}
-                                                onClick={() => setSelectedImage({ src, title: 'RGB WORK' })}
-                                                loading="lazy"
-                                            />
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
+                    <WorkCanvas
+                        layout={rgbPersonalLayout}
+                        height={contentHeight}
+                        scale={scale}
+                        resolveSrc={resolveRgbSrc}
+                        onSelectImage={setSelectedImage}
+                        imageTitle="RGB WORK"
+                        getZIndex={getRgbPersonalZIndex}
+                        imageClassName={getRgbPersonalImageClass}
+                    />
                 </div>
             )}
             {activeFilter === 'commercial' && (
@@ -392,64 +273,29 @@ const RGB = () => {
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">DAZED KOREA — BRAND COLLABORATION VFX</h2>
                                     <span className="text-3xl font-pretendard font-bold tracking-tighter mt-2 block">2025</span>
                                 </div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">ARTIST</span>BOYNEXTDOOR CORTIS</div>
-                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">BRAND</span>MONCLER BALENCIAGA</div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">ARTIST</span>BOYNEXTDOOR · CORTIS</div>
+                                <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">BRAND</span>MONCLER · BALENCIAGA</div>
                                 <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep mb-4"><span className="text-sm text-gray-600 uppercase font-bold tracking-tight mb-2 block">ROLE</span>3D 모델링 · 쉐이딩 · 라이팅 · 렌더링 · VFX 컴포지팅 · 컬러 그레이딩</div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Right: Image Canvas */}
-                    <div
-                        className="flex-1 relative overflow-hidden"
-                        style={{ height: `${comContentHeight * scale}px` }}
-                    >
-                        <div
-                            className="absolute origin-top-left transition-transform duration-100 ease-out"
-                            style={{
-                                width: '1920px',
-                                height: `${comContentHeight}px`,
-                                transform: `scale(${scale})`,
-                            }}
-                        >
-                            {Object.entries(layoutConfigCommercial).map(([filename, pos]) => {
-                                const src = pos.source === 'images' ? allImages[filename] : allCommercials[filename];
-                                if (!src) return null;
-
-                                if (filename.endsWith('.mp4')) {
-                                    return (
-                                        <div key={filename} className="absolute drop-shadow-2xl" style={{ left: `${pos.x}px`, top: `${pos.y}px`, width: `${pos.w}px`, height: `${pos.h}px` }}>
-                                            <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover rounded-xl" />
-                                        </div>
-                                    );
-                                }
-
-                                return (
-                                    <div key={filename} className="absolute drop-shadow-2xl hover:scale-[1.02] transition-transform cursor-pointer" style={{ left: `${pos.x}px`, top: `${pos.y}px`, width: `${pos.w}px`, height: `${pos.h}px` }}>
-                                        <img src={src} alt={filename} className="w-full h-full object-cover rounded-xl border border-black/10" onClick={() => setSelectedImage({ src, title: 'COMMERCIAL WORK' })} loading="lazy" />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+                    <WorkCanvas
+                        layout={rgbCommercialLayout}
+                        height={comContentHeight}
+                        scale={scale}
+                        resolveSrc={resolveRgbSrc}
+                        onSelectImage={setSelectedImage}
+                        imageTitle="COMMERCIAL WORK"
+                        sortEntries={false}
+                        itemClassName="absolute drop-shadow-2xl hover:scale-[1.02] transition-transform cursor-pointer"
+                        imageClassName="w-full h-full object-cover rounded-xl border border-black/10"
+                    />
                 </div>
             )}
 
 
-            {/* Lightbox */}
-            {selectedImage && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-10"
-                    onClick={() => setSelectedImage(null)}
-                >
-                    <div className="relative max-w-7xl w-full h-full flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
-                        <button className="absolute top-4 right-4 text-white/50 hover:text-white text-5xl font-light transition-colors z-50" onClick={() => setSelectedImage(null)}>
-                            &times;
-                        </button>
-                        <img src={selectedImage.src} alt={selectedImage.title} className="max-w-full max-h-[85vh] object-contain shadow-2xl" />
-                    </div>
-                </div>
-            )}
+            <Lightbox image={selectedImage} onClose={() => setSelectedImage(null)} />
         </div>
     );
 };

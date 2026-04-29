@@ -1,56 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Main from './Main';
+import Lightbox from '../components/Lightbox';
+import WorkCanvas from '../components/WorkCanvas';
+import {
+    SIDEBAR_WIDTH,
+    cmykCommercialLayout,
+    cmykPersonalLayout,
+    getLayoutHeight,
+} from '../config/workLayouts';
 import { cmykProjects } from '../data/projects';
+import { cmykWorkAssets, rgbCommercialAssets } from '../lib/assets';
 
-const SIDEBAR_WIDTH = 420;
+const getCmykPersonalZIndex = (filename) => {
+    if (filename === '5.png') return 100;
+    if (filename === '14.png') return 20;
+    return 10;
+};
+
+const getCmykPersonalImageClass = (filename) =>
+    `w-full h-full object-contain cursor-pointer ${filename === '5.png' ? '' : 'mix-blend-multiply'}`;
 
 const CMYK = () => {
-
-    const layoutConfig = {
-        '1.png': { x: 0, y: 150, w: 1920, h: 2560 },
-        '2.png': { x: 0, y: 2716, w: 1933, h: 1289 },
-        '3-1.png': { x: 0, y: 3766, w: 1080, h: 1440 },
-        '3-2.png': { x: 985, y: 4138, w: 1080, h: 1440 },
-        '4.png': { x: 790, y: 5056, w: 1080, h: 1440 },
-        '5.png': { x: 50, y: 5579, w: 1080, h: 1440 },
-        '6.png': { x: 250, y: 6618, w: 1080, h: 1440 },
-        '7.png': { x: -263, y: 8058, w: 2447, h: 2063 },
-        '8.png': { x: 0, y: 10121, w: 935, h: 623 },
-        '9.png': { x: 868, y: 10469, w: 1052, h: 701 },
-        '10.png': { x: 811, y: 11214, w: 999, h: 1499 },
-        '11.png': { x: -2, y: 12913, w: 1925, h: 1203 },
-        '12-1.png': { x: 0, y: 14202, w: 981, h: 613 },
-        '12-2.png': { x: 985, y: 14202, w: 940, h: 588 },
-        '13-1.png': { x: 0, y: 14815, w: 624, h: 622 },
-        '13-2.png': { x: 676, y: 14815, w: 623, h: 623 },
-        '13-3.png': { x: 1299, y: 14819, w: 621, h: 619 },
-        '14.png': { x: 173, y: 15438, w: 252, h: 270 },
-        '15.png': { x: 425, y: 15524, w: 1070, h: 723 },
-        'word1.png': { x: 1394, y: 9990, w: 470, h: 665 },
-        'word2.png': { x: 0, y: 10830, w: 480, h: 679 },
-        'word3.png': { x: 505, y: 10999, w: 480, h: 678 },
-    };
-
-
-    const layoutConfigCommercial = {
-        'CMYK_Cm1.jpg': { x: 50, y: 50, w: 1800, h: 1200, source: 'images' },
-        '7-1.png': { x: 30, y: 1500, w: 610, h: 887, source: 'commercials' },
-        '7-2.png': { x: 650, y: 1500, w: 610, h: 887, source: 'commercials' },
-        '7-3.png': { x: 1270, y: 1500, w: 610, h: 887, source: 'commercials' },
-    };
-
-    const [allImages, setAllImages] = useState({});
-    const [allCommercials, setAllCommercials] = useState({});
     const [selectedImage, setSelectedImage] = useState(null);
     const [scale, setScale] = useState(1);
     const [activeFilter, setActiveFilter] = useState('personal');
 
-    // Calculate max height based on the last image
-    const lastImage = layoutConfig['15.png'];
-    const contentHeight = lastImage ? lastImage.y + lastImage.h + 50 : 20000;
-
-    const lastComImage = layoutConfigCommercial['7-3.png'];
-    const comContentHeight = lastComImage ? lastComImage.y + lastComImage.h + 50 : 5000;
+    const contentHeight = getLayoutHeight(cmykPersonalLayout, '15.png', 20000);
+    const comContentHeight = getLayoutHeight(cmykCommercialLayout, '7-3.png', 5000);
 
 
     useEffect(() => {
@@ -65,33 +41,8 @@ const CMYK = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        const loadImages = () => {
-            const globImports = import.meta.glob('../assets/CMYK_work/*.(png|jpg|jpeg|webp|gif)', { eager: true });
-            const imageMap = {};
-            Object.entries(globImports).forEach(([path, module]) => {
-                const fileName = path.split('/').pop();
-                imageMap[fileName] = module.default;
-            });
-            setAllImages(imageMap);
-        };
-        loadImages();
-    }, []);
-
-    useEffect(() => {
-        const loadCommercials = () => {
-            const globImports = import.meta.glob('../assets/RGB-commercial/*.(png|jpg|jpeg|webp|gif|mp4)', { eager: true });
-            const imageMap = {};
-            Object.entries(globImports).forEach(([path, module]) => {
-                const fileName = path.split('/').pop();
-                imageMap[fileName] = module.default;
-            });
-            setAllCommercials(imageMap);
-        };
-        loadCommercials();
-    }, []);
-
-    const getImageSrc = (filename) => allImages[filename] || null;
+    const resolveCmykSrc = (filename, position) =>
+        position.source === 'commercials' ? rgbCommercialAssets[filename] : cmykWorkAssets[filename];
 
     // Get project data
     const wetToDryProject = cmykProjects[0];
@@ -110,7 +61,7 @@ const CMYK = () => {
                         style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
                     >
                         {/* WET TO DRY */}
-                        <div className="absolute w-full p-10" style={{ top: `${(layoutConfig['1.png']?.y || 0) * scale}px` }}>
+                        <div className="absolute w-full p-10" style={{ top: `${(cmykPersonalLayout['1.png']?.y || 0) * scale}px` }}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
@@ -138,7 +89,7 @@ const CMYK = () => {
 
                         {/* PAIN TONE */}
                         {painToneData && (
-                            <div className="absolute w-full p-10" style={{ top: `${(layoutConfig['11.png']?.y || 0) * scale}px` }}>
+                            <div className="absolute w-full p-10" style={{ top: `${(cmykPersonalLayout['11.png']?.y || 0) * scale}px` }}>
                                 <div className="mb-16">
                                     <div className="border-b border-black pb-4 mb-6">
                                         <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
@@ -166,54 +117,16 @@ const CMYK = () => {
                         )}
                     </div>
 
-                    {/* Right: Image Canvas (original absolute positioning) */}
-                    <div
-                        className="flex-1 relative overflow-hidden"
-                        style={{ height: `${contentHeight * scale}px` }}
-                    >
-                        <div
-                            className="absolute origin-top-left transition-transform duration-100 ease-out"
-                            style={{
-                                width: '1920px',
-                                height: `${contentHeight}px`,
-                                transform: `scale(${scale})`,
-                            }}
-                        >
-                            {Object.entries(layoutConfig)
-                                .sort(([filenameA], [filenameB]) => {
-                                    const getZIndex = (name) => name === '5.png' ? 100 : (name === '14.png' ? 20 : 10);
-                                    return getZIndex(filenameA) - getZIndex(filenameB);
-                                })
-                                .map(([filename, pos]) => {
-                                    const src = getImageSrc(filename);
-                                    if (!src) return null;
-
-                                    const zIndex = filename === '5.png' ? 100 : (filename === '14.png' ? 20 : 10);
-
-                                    return (
-                                        <div
-                                            key={filename}
-                                            className="absolute"
-                                            style={{
-                                                left: `${pos.x}px`,
-                                                top: `${pos.y}px`,
-                                                width: `${pos.w}px`,
-                                                height: `${pos.h}px`,
-                                                zIndex: zIndex
-                                            }}
-                                        >
-                                            <img
-                                                src={src}
-                                                alt={filename}
-                                                className={`w-full h-full object-contain cursor-pointer ${filename === '5.png' ? '' : 'mix-blend-multiply'}`}
-                                                onClick={() => setSelectedImage({ src, title: 'CMYK WORK' })}
-                                                loading="lazy"
-                                            />
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
+                    <WorkCanvas
+                        layout={cmykPersonalLayout}
+                        height={contentHeight}
+                        scale={scale}
+                        resolveSrc={resolveCmykSrc}
+                        onSelectImage={setSelectedImage}
+                        imageTitle="CMYK WORK"
+                        getZIndex={getCmykPersonalZIndex}
+                        imageClassName={getCmykPersonalImageClass}
+                    />
                 </div>
             )}
 
@@ -246,49 +159,22 @@ const CMYK = () => {
 
                     </div>
 
-                    {/* Right: Image Canvas */}
-                    <div
-                        className="flex-1 relative overflow-hidden"
-                        style={{ height: `${comContentHeight * scale}px` }}
-                    >
-                        <div
-                            className="absolute origin-top-left transition-transform duration-100 ease-out"
-                            style={{
-                                width: '1920px',
-                                height: `${comContentHeight}px`,
-                                transform: `scale(${scale})`,
-                            }}
-                        >
-                            {Object.entries(layoutConfigCommercial).map(([filename, pos]) => {
-                                const src = pos.source === 'images' ? allImages[filename] : allCommercials[filename];
-                                if (!src) return null;
-
-                                return (
-                                    <div key={filename} className="absolute drop-shadow-xl hover:scale-[1.02] transition-transform cursor-pointer" style={{ left: `${pos.x}px`, top: `${pos.y}px`, width: `${pos.w}px`, height: `${pos.h}px` }}>
-                                        <img src={src} alt={filename} className="w-full h-full object-contain" onClick={() => setSelectedImage({ src, title: 'COMMERCIAL WORK' })} loading="lazy" />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+                    <WorkCanvas
+                        layout={cmykCommercialLayout}
+                        height={comContentHeight}
+                        scale={scale}
+                        resolveSrc={resolveCmykSrc}
+                        onSelectImage={setSelectedImage}
+                        imageTitle="COMMERCIAL WORK"
+                        sortEntries={false}
+                        itemClassName="absolute drop-shadow-xl hover:scale-[1.02] transition-transform cursor-pointer"
+                        imageClassName="w-full h-full object-contain"
+                    />
                 </div>
             )}
 
 
-            {/* Lightbox */}
-            {selectedImage && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-10"
-                    onClick={() => setSelectedImage(null)}
-                >
-                    <div className="relative max-w-7xl w-full h-full flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
-                        <button className="absolute top-4 right-4 text-white/50 hover:text-white text-5xl font-light transition-colors z-50" onClick={() => setSelectedImage(null)}>
-                            &times;
-                        </button>
-                        <img src={selectedImage.src} alt={selectedImage.title} className="max-w-full max-h-[85vh] object-contain shadow-2xl" />
-                    </div>
-                </div>
-            )}
+            <Lightbox image={selectedImage} onClose={() => setSelectedImage(null)} />
         </div>
     );
 };

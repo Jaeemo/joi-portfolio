@@ -27,3 +27,93 @@
 .animate-fade-in {
   animation: fade-in 1s ease forwards;
 }
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(0.95); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite ease-in-out;
+}
+
+.hero-gem {
+  z-index: 5;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(4px 6px 0 rgba(0, 0, 0, 0.14));
+  transform: rotate(var(--gem-rotate, 0deg));
+  will-change: transform, opacity, filter;
+  pointer-events: none;
+}
+
+.text-outline-pink {
+  -webkit-text-stroke: 1px #ff69b4;
+  paint-order: stroke fill;
+}
+
+.text-outline-white-heavy {
+  -webkit-text-stroke: 3px white;
+  paint-order: stroke fill;
+}
+
+.hero-nav-arrow {
+  line-height: 1;
+  transition:
+    transform 300ms ease,
+    filter 300ms ease;
+}
+
+.hero-nav-arrow:hover,
+.hero-nav-arrow:focus-visible {
+  filter: drop-shadow(0 0 12px rgba(255, 0, 179, 0.58));
+}
+
+.hero-nav-arrow:focus-visible {
+  outline: none;
+}
+
+.hero-nav-point {
+  width: 12rem;
+  display: grid;
+  place-items: center;
+}
+
+.hero-layout-scene[data-scaled="true"] .hero-title-line {
+  font-size: 173px;
+}
+
+.hero-layout-scene[data-scaled="true"] .hero-subtitle {
+  font-size: 2.25rem;
+}
+
+@keyframes gem-pop-in {
+  0% {
+    opacity: 0;
+    filter: blur(5px) drop-shadow(4px 6px 0 rgba(0, 0, 0, 0.14));
+  }
+  100% {
+    opacity: 0.9;
+    filter: blur(0) drop-shadow(4px 6px 0 rgba(0, 0, 0, 0.14));
+  }
+}
+
+@keyframes gem-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--gem-rotate, 0deg)) scale(1);
+  }
+  50% {
+    transform: translate3d(var(--gem-drift-x, 8px), var(--gem-drift-y, -12px), 0) rotate(calc(var(--gem-rotate, 0deg) + var(--gem-wobble, 7deg))) scale(1.08);
+  }
+}
+
+@media (min-width: 768px) {
+  .text-outline-pink { -webkit-text-stroke: 2px #ff69b4; }
+  .text-outline-white-heavy { -webkit-text-stroke: 5px white; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gem {
+    animation: none !important;
+  }
+}
