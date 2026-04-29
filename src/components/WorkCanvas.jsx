@@ -19,7 +19,7 @@ const WorkCanvas = ({
     : entries;
 
   return (
-    <div className="flex-1 relative overflow-hidden" style={{ height: `${height * scale}px` }}>
+    <div className="flex-1 min-w-0 w-full relative overflow-hidden" style={{ height: `${height * scale}px` }}>
       <div
         className="absolute origin-top-left transition-transform duration-100 ease-out"
         style={{

@@ -32,8 +32,10 @@ const RGB = () => {
 
     useEffect(() => {
         const handleResize = () => {
-            const availableWidth = window.innerWidth - SIDEBAR_WIDTH;
-            const newScale = Math.min(Math.max(availableWidth / 1920, 0.2), 1.5);
+            const nextIsMobile = window.innerWidth < 768;
+            const availableWidth = window.innerWidth - (nextIsMobile ? 0 : SIDEBAR_WIDTH);
+            const minScale = nextIsMobile ? 0.1 : 0.2;
+            const newScale = Math.min(Math.max(availableWidth / 1920, minScale), 1.5);
             setScale(newScale);
         };
 
@@ -61,7 +63,7 @@ const RGB = () => {
                 <div className="flex w-full">
                     {/* Left: Description Sidebar Bar */}
                     <div
-                        className="border-r border-black/10 bg-white relative"
+                        className="hidden md:block border-r border-black/10 bg-white relative"
                         style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
                     >
                         {/* TOOTH FAIRY */}
@@ -240,7 +242,7 @@ const RGB = () => {
                 <div className="flex w-full">
                     {/* Left: Description Sidebar Bar */}
                     <div
-                        className="border-r border-black/10 bg-white relative"
+                        className="hidden md:block border-r border-black/10 bg-white relative"
                         style={{ width: `${SIDEBAR_WIDTH}px`, minWidth: `${SIDEBAR_WIDTH}px` }}
                     >
                         {/* 5. DIDI DAZED */}
