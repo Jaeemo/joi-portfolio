@@ -46,6 +46,10 @@
   pointer-events: none;
 }
 
+.hero-layout-scene {
+  transform-origin: top center;
+}
+
 .text-outline-pink {
   -webkit-text-stroke: 1px #ff69b4;
   paint-order: stroke fill;
