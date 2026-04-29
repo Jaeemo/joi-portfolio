@@ -83,29 +83,21 @@
 }
 
 .work-section {
-  flex-direction: column;
+  --mobile-work-sidebar-width: clamp(128px, 34vw, 168px);
+  align-items: stretch;
+  flex-direction: row;
 }
 
 .work-sidebar {
-  width: 100%;
-  min-width: 0;
-  border-right: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  flex: 0 0 var(--mobile-work-sidebar-width);
+  width: var(--mobile-work-sidebar-width);
+  min-width: var(--mobile-work-sidebar-width);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 0;
 }
 
 .work-sidebar > .absolute {
-  position: static !important;
-  top: auto !important;
-}
-
-.work-sidebar > .absolute > .mb-16,
-.work-sidebar > .absolute > .mt-12,
-.work-sidebar > .absolute > div {
-  margin-bottom: 0;
-}
-
-.work-sidebar > .absolute + .absolute {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  position: absolute !important;
 }
 
 .hero-layout-scene[data-scaled="true"] .hero-title-line {
@@ -142,10 +134,12 @@
   .text-outline-white-heavy { -webkit-text-stroke: 5px white; }
 
   .work-section {
+    --mobile-work-sidebar-width: 420px;
     flex-direction: row;
   }
 
   .work-sidebar {
+    flex-basis: 420px;
     width: 420px;
     min-width: 420px;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -159,9 +153,65 @@
   .work-sidebar > .absolute > .mb-16 {
     margin-bottom: 4rem;
   }
+}
 
-  .work-sidebar > .absolute + .absolute {
-    border-top: 0;
+@media (max-width: 767px) {
+  .work-sidebar > .absolute {
+    padding: 0.75rem 0.625rem !important;
+  }
+
+  .work-sidebar .tracking-tight,
+  .work-sidebar .tracking-tighter {
+    letter-spacing: 0;
+  }
+
+  .work-sidebar h2,
+  .work-sidebar h3,
+  .work-sidebar span,
+  .work-sidebar div {
+    overflow-wrap: anywhere;
+  }
+
+  .work-sidebar .text-4xl {
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  .work-sidebar .text-3xl {
+    font-size: 0.82rem;
+    line-height: 1.05;
+  }
+
+  .work-sidebar .text-xl {
+    font-size: 0.72rem;
+    line-height: 1.1;
+  }
+
+  .work-sidebar .text-base {
+    font-size: 0.66rem;
+    line-height: 1.32;
+  }
+
+  .work-sidebar .text-sm {
+    font-size: 0.6rem;
+    line-height: 1.32;
+  }
+
+  .work-sidebar .text-xs {
+    font-size: 0.55rem;
+    line-height: 1.3;
+  }
+
+  .work-sidebar .mb-16 {
+    margin-bottom: 1rem;
+  }
+
+  .work-sidebar .mb-6 {
+    margin-bottom: 0.5rem;
+  }
+
+  .work-sidebar .pb-4 {
+    padding-bottom: 0.4rem;
   }
 }
 

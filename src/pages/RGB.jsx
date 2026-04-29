@@ -3,9 +3,9 @@ import Main from './Main';
 import Lightbox from '../components/Lightbox';
 import WorkCanvas from '../components/WorkCanvas';
 import {
-    SIDEBAR_WIDTH,
     angeliteTextY,
     getLayoutHeight,
+    getResponsiveSidebarWidth,
     rgbCommercialLayout,
     rgbPersonalLayout,
 } from '../config/workLayouts';
@@ -33,8 +33,9 @@ const RGB = () => {
     useEffect(() => {
         const handleResize = () => {
             const nextIsMobile = window.innerWidth < 768;
-            const availableWidth = window.innerWidth - (nextIsMobile ? 0 : SIDEBAR_WIDTH);
-            const minScale = nextIsMobile ? 0.1 : 0.2;
+            const sidebarWidth = getResponsiveSidebarWidth(window.innerWidth);
+            const availableWidth = window.innerWidth - sidebarWidth;
+            const minScale = nextIsMobile ? 0.08 : 0.2;
             const newScale = Math.min(Math.max(availableWidth / 1920, minScale), 1.5);
             setScale(newScale);
         };

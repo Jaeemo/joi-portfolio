@@ -1,4 +1,16 @@
 export const SIDEBAR_WIDTH = 420;
+export const MOBILE_SIDEBAR_WIDTH_MIN = 128;
+export const MOBILE_SIDEBAR_WIDTH_MAX = 168;
+export const MOBILE_SIDEBAR_WIDTH_RATIO = 0.34;
+
+export const getResponsiveSidebarWidth = (viewportWidth) => {
+  if (viewportWidth >= 768) return SIDEBAR_WIDTH;
+
+  return Math.min(
+    Math.max(viewportWidth * MOBILE_SIDEBAR_WIDTH_RATIO, MOBILE_SIDEBAR_WIDTH_MIN),
+    MOBILE_SIDEBAR_WIDTH_MAX,
+  );
+};
 
 export const angeliteImageY = 15744;
 export const angeliteTextY = 15364;
