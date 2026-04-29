@@ -7,6 +7,7 @@ import {
     cmykPersonalLayout,
     getLayoutHeight,
     getResponsiveSidebarWidth,
+    getSidebarBlockStyle,
 } from '../config/workLayouts';
 import { cmykProjects } from '../data/projects';
 import { cmykWorkAssets, rgbCommercialAssets } from '../lib/assets';
@@ -23,6 +24,7 @@ const getCmykPersonalImageClass = (filename) =>
 const CMYK = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [scale, setScale] = useState(1);
+    const [isMobile, setIsMobile] = useState(false);
     const [activeFilter, setActiveFilter] = useState('personal');
 
     const contentHeight = getLayoutHeight(cmykPersonalLayout, '15.png', 20000);
@@ -36,6 +38,7 @@ const CMYK = () => {
             const availableWidth = window.innerWidth - sidebarWidth;
             const minScale = nextIsMobile ? 0.08 : 0.2;
             const newScale = Math.min(Math.max(availableWidth / 1920, minScale), 1.5);
+            setIsMobile(nextIsMobile);
             setScale(newScale);
         };
 
@@ -50,6 +53,8 @@ const CMYK = () => {
     // Get project data
     const wetToDryProject = cmykProjects[0];
     const painToneData = wetToDryProject?.imageLayout?.find(item => item.type === 'text-section');
+    const cmykPersonalSidebarStyle = (y, nextY) => getSidebarBlockStyle({ y, nextY, scale, isMobile });
+    const cmykCommercialSidebarStyle = (y, nextY) => getSidebarBlockStyle({ y, nextY, scale, isMobile });
 
     return (
         <div className="relative w-full min-h-screen bg-white selection:bg-pink-500 selection:text-white overflow-x-hidden">
@@ -61,7 +66,7 @@ const CMYK = () => {
                     {/* Left: Description Sidebar Bar */}
                     <div className="work-sidebar border-r border-black/10 bg-white relative">
                         {/* WET TO DRY */}
-                        <div className="absolute w-full p-10" style={{ top: `${(cmykPersonalLayout['1.png']?.y || 0) * scale}px` }}>
+                        <div className="absolute w-full p-10" style={cmykPersonalSidebarStyle(cmykPersonalLayout['1.png']?.y || 0, cmykPersonalLayout['11.png']?.y)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
@@ -89,7 +94,7 @@ const CMYK = () => {
 
                         {/* PAIN TONE */}
                         {painToneData && (
-                            <div className="absolute w-full p-10" style={{ top: `${(cmykPersonalLayout['11.png']?.y || 0) * scale}px` }}>
+                            <div className="absolute w-full p-10" style={cmykPersonalSidebarStyle(cmykPersonalLayout['11.png']?.y || 0)}>
                                 <div className="mb-16">
                                     <div className="border-b border-black pb-4 mb-6">
                                         <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
@@ -135,7 +140,7 @@ const CMYK = () => {
                     {/* Left: Description Sidebar Bar */}
                     <div className="work-sidebar border-r border-black/10 bg-white relative">
                         {/* 1. YAMADA RYOSUKE */}
-                        <div className="absolute w-full p-10" style={{ top: `${50 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={cmykCommercialSidebarStyle(50)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">

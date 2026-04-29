@@ -6,6 +6,7 @@ import {
     angeliteTextY,
     getLayoutHeight,
     getResponsiveSidebarWidth,
+    getSidebarBlockStyle,
     rgbCommercialLayout,
     rgbPersonalLayout,
 } from '../config/workLayouts';
@@ -25,6 +26,7 @@ const getRgbPersonalImageClass = (filename) =>
 const RGB = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [scale, setScale] = useState(1);
+    const [isMobile, setIsMobile] = useState(false);
     const [activeFilter, setActiveFilter] = useState('personal');
 
     const contentHeight = getLayoutHeight(rgbPersonalLayout, 'video-1.mp4', 30000);
@@ -37,6 +39,7 @@ const RGB = () => {
             const availableWidth = window.innerWidth - sidebarWidth;
             const minScale = nextIsMobile ? 0.08 : 0.2;
             const newScale = Math.min(Math.max(availableWidth / 1920, minScale), 1.5);
+            setIsMobile(nextIsMobile);
             setScale(newScale);
         };
 
@@ -55,6 +58,9 @@ const RGB = () => {
 
     if (!toothFairy || !angelHeart) return null;
 
+    const rgbPersonalSidebarStyle = (y, nextY) => getSidebarBlockStyle({ y, nextY, scale, isMobile });
+    const rgbCommercialSidebarStyle = (y, nextY) => getSidebarBlockStyle({ y, nextY, scale, isMobile });
+
     return (
         <div className="relative w-full min-h-screen bg-white selection:bg-pink-500 selection:text-white overflow-x-hidden">
             <Main activePage="rgb" activeFilter={activeFilter} onFilterChange={setActiveFilter} />
@@ -65,7 +71,7 @@ const RGB = () => {
                     {/* Left: Description Sidebar Bar */}
                     <div className="work-sidebar border-r border-black/10 bg-white relative">
                         {/* TOOTH FAIRY */}
-                        <div className="absolute w-full p-10" style={{ top: `${(rgbPersonalLayout['1.png']?.y || 0) * scale}px` }}>
+                        <div className="absolute w-full p-10" style={rgbPersonalSidebarStyle(rgbPersonalLayout['1.png']?.y || 0, rgbPersonalLayout['4.png']?.y)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
@@ -92,7 +98,7 @@ const RGB = () => {
                         </div>
 
                         {/* ANGEL HEART */}
-                        <div className="absolute w-full p-10" style={{ top: `${(rgbPersonalLayout['4.png']?.y || 0) * scale}px` }}>
+                        <div className="absolute w-full p-10" style={rgbPersonalSidebarStyle(rgbPersonalLayout['4.png']?.y || 0, angeliteTextY)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">
@@ -119,7 +125,7 @@ const RGB = () => {
                         </div>
 
                         {/* ALL ANGELITE TEXTS COMBINED TO PREVENT OVERLAP */}
-                        <div className="absolute w-full p-10 flex flex-col gap-16" style={{ top: `${angeliteTextY * scale}px` }}>
+                        <div className="absolute w-full p-10 flex flex-col gap-16" style={rgbPersonalSidebarStyle(angeliteTextY, 19300)}>
 
                             {/* VIRTUAL IDOL - ANGELITE (Original text restored) */}
                             {virtualIdolText && (
@@ -182,7 +188,7 @@ const RGB = () => {
                         </div>
 
                         {/* ANGELITE CD GRAPHICS (Positioned alongside the images) */}
-                        <div className="absolute w-full p-10" style={{ top: `${19300 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={rgbPersonalSidebarStyle(19300, 20604)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">ANGELITE CD GRAPHICS</h2>
@@ -197,7 +203,7 @@ const RGB = () => {
                         </div>
 
                         {/* ANGELITE PHOTOCARDS (Positioned alongside the photocard images) */}
-                        <div className="absolute w-full p-10" style={{ top: `${20604 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={rgbPersonalSidebarStyle(20604, 21400)}>
                             <div className="text-base leading-relaxed text-gray-900 tracking-tight whitespace-pre-wrap break-keep">
                                 55x85 mm<br />
                                 Virtual idol character photo card<br />
@@ -206,7 +212,7 @@ const RGB = () => {
                         </div>
 
                         {/* ANGELITE VIDEOS (Positioned alongside the videos) */}
-                        <div className="absolute w-full p-10" style={{ top: `${21400 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={rgbPersonalSidebarStyle(21400)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">ANGELITE VIDEOS</h2>
@@ -241,7 +247,7 @@ const RGB = () => {
                     {/* Left: Description Sidebar Bar */}
                     <div className="work-sidebar border-r border-black/10 bg-white relative">
                         {/* 5. DIDI DAZED */}
-                        <div className="absolute w-full p-10" style={{ top: `${50 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={rgbCommercialSidebarStyle(50, 1450)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">DIDI — DAZED KOREA ORIGINAL CHARACTER</h2>
@@ -254,7 +260,7 @@ const RGB = () => {
                         </div>
 
                         {/* 6. DAZED MONTHLY */}
-                        <div className="absolute w-full p-10" style={{ top: `${1450 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={rgbCommercialSidebarStyle(1450, 2850)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">DAZED KOREA MONTHLY HIGHLIGHTS</h2>
@@ -264,7 +270,7 @@ const RGB = () => {
                         </div>
 
                         {/* 7. MONCLER */}
-                        <div className="absolute w-full p-10" style={{ top: `${2850 * scale}px` }}>
+                        <div className="absolute w-full p-10" style={rgbCommercialSidebarStyle(2850)}>
                             <div className="mb-16">
                                 <div className="border-b border-black pb-4 mb-6">
                                     <h2 className="text-4xl font-pretendard font-bold uppercase tracking-tighter leading-none">DAZED KOREA — BRAND COLLABORATION VFX</h2>

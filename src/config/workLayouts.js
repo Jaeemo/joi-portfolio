@@ -12,6 +12,16 @@ export const getResponsiveSidebarWidth = (viewportWidth) => {
   );
 };
 
+export const getSidebarBlockStyle = ({ y, nextY, scale, isMobile, reserve = 16, minHeight = 64 }) => {
+  const style = { top: `${y * scale}px` };
+
+  if (isMobile && nextY) {
+    style['--mobile-description-max-height'] = `${Math.max((nextY - y) * scale - reserve, minHeight)}px`;
+  }
+
+  return style;
+};
+
 export const angeliteImageY = 15744;
 export const angeliteTextY = 15364;
 
